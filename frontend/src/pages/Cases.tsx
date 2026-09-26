@@ -38,7 +38,7 @@ export const Cases: React.FC = () => {
   const handleCreateCase = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const entitiesList = entitiesInput.split(',').map((s) => s.strip ? s.strip() : s.trim()).filter(Boolean);
+      const entitiesList = entitiesInput.split(',').map((s) => s.trim()).filter(Boolean);
       await createCase({
         title,
         description,
@@ -109,28 +109,31 @@ export const Cases: React.FC = () => {
       {/* Case Management Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Cases List Table */}
-        <div className="lg:col-span-2 bg-surface-100 border border-surface-300 rounded-xl overflow-hidden shadow-lg">
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs text-content-600">
-              <thead className="bg-surface-50 text-content-500 font-mono text-[11px] uppercase border-b border-surface-300">
+        <div className="lg:col-span-2 bg-surface-100 border border-surface-300 rounded-xl shadow-lg flex flex-col">
+          <div className="overflow-x-auto overflow-y-auto max-h-[650px] rounded-xl custom-scrollbar">
+            <table className="w-full text-left text-xs text-content-600 relative">
+              <thead className="sticky top-0 z-10 bg-surface-50/95 backdrop-blur font-mono text-[10px] text-content-500 uppercase border-b border-surface-300 shadow-sm">
                 <tr>
-                  <th className="p-3">Case ID</th>
-                  <th className="p-3">Title</th>
-                  <th className="p-3 text-center">Status</th>
-                  <th className="p-3">Assigned To</th>
-                  <th className="p-3 text-right">Actions</th>
+                  <th className="py-3 px-4 font-semibold tracking-wider">Case ID</th>
+                  <th className="py-3 px-4 font-semibold tracking-wider">Title</th>
+                  <th className="py-3 px-4 text-center font-semibold tracking-wider">Status</th>
+                  <th className="py-3 px-4 font-semibold tracking-wider">Assigned To</th>
+                  <th className="py-3 px-4 text-right font-semibold tracking-wider">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-surface-300 font-mono">
+              <tbody className="divide-y divide-surface-200/50 font-mono">
                 {loading ? (
                   <tr>
-                    <td colSpan={5} className="p-6 text-center text-content-400">
-                      Loading investigation cases...
+                    <td colSpan={5} className="py-8 text-center text-content-400">
+                      <div className="flex items-center justify-center gap-2">
+                        <span className="w-4 h-4 border-2 border-brand-500 border-t-transparent rounded-full animate-spin"></span>
+                        Loading investigation cases...
+                      </div>
                     </td>
                   </tr>
                 ) : cases.length === 0 ? (
                   <tr>
-                    <td colSpan={5} className="p-6 text-center text-content-400">
+                    <td colSpan={5} className="py-8 text-center text-content-400">
                       No investigation cases created yet. Click "Create New Case" above.
                     </td>
                   </tr>
@@ -139,35 +142,35 @@ export const Cases: React.FC = () => {
                     <tr
                       key={c.case_id}
                       onClick={() => setSelectedCase(c)}
-                      className={`cursor-pointer transition-all ${
-                        selectedCase?.case_id === c.case_id ? 'bg-surface-200' : 'hover:bg-surface-200'
+                      className={`cursor-pointer transition-colors group ${
+                        selectedCase?.case_id === c.case_id ? 'bg-brand-500/10' : 'hover:bg-surface-50'
                       }`}
                     >
-                      <td className="p-3 font-semibold text-brand-900 dark:text-brand-100">{c.case_id}</td>
-                      <td className="p-3 font-medium text-content-700">{c.title}</td>
-                      <td className="p-3 text-center">
+                      <td className="py-2.5 px-4 font-semibold text-brand-900 dark:text-brand-100 group-hover:text-brand-600 transition-colors">{c.case_id}</td>
+                      <td className="py-2.5 px-4 font-medium text-content-700">{c.title}</td>
+                      <td className="py-2.5 px-4 text-center">
                         <span
-                          className={`px-2.5 py-0.5 rounded text-[10px] font-bold ${
+                          className={`inline-flex items-center justify-center px-2.5 py-0.5 rounded text-[9px] font-bold tracking-widest ${
                             c.status === 'OPEN'
-                              ? 'bg-warning-50 text-warning-600 border border-warning-500'
+                              ? 'bg-warning-500/10 text-warning-600 border border-warning-500/30'
                               : c.status === 'UNDER INVESTIGATION'
-                              ? 'bg-brand-500/20 text-brand-600 dark:text-brand-400 border border-brand-500/30'
+                              ? 'bg-brand-500/10 text-brand-600 dark:text-brand-400 border border-brand-500/30'
                               : c.status === 'RESOLVED'
-                              ? 'bg-verified-500/20 text-verified-600 border border-verified-500/30'
-                              : 'bg-surface-300 text-content-500'
+                              ? 'bg-verified-500/10 text-verified-600 border border-verified-500/30'
+                              : 'bg-surface-200 text-content-500 border-surface-300'
                           }`}
                         >
                           {c.status}
                         </span>
                       </td>
-                      <td className="p-3 text-content-600">{c.assigned_to || 'Unassigned'}</td>
-                      <td className="p-3 text-right">
+                      <td className="py-2.5 px-4 text-content-600">{c.assigned_to || 'Unassigned'}</td>
+                      <td className="py-2.5 px-4 text-right">
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
                             handleDeleteCase(c.case_id);
                           }}
-                          className="p-1 text-content-500 hover:text-critical-600 transition-all"
+                          className="p-1 text-content-500 hover:text-critical-600 transition-all rounded hover:bg-surface-200"
                         >
                           <Trash2 className="w-3.5 h-3.5" />
                         </button>

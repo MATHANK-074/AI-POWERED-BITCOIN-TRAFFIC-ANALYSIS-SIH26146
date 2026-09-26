@@ -32,12 +32,74 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose,
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isOpen, onClose]);
 
+  const allCommands = [
+    { id: 'search-tx', label: 'Search transaction...', group: 'SEARCH', icon: Search, action: () => alert('Search TX: ' + searchQuery) },
+    { id: 'search-wallet', label: 'Search wallet...', group: 'SEARCH', icon: Search, action: () => alert('Search Wallet: ' + searchQuery) },
+    { id: 'search-ip', label: 'Search IP...', group: 'SEARCH', icon: Search, action: () => alert('Search IP: ' + searchQuery) },
+    { id: 'search-entity', label: 'Search entity...', group: 'SEARCH', icon: Search, action: () => alert('Search Entity: ' + searchQuery) },
+    
+    { id: 'nav-graph', label: 'Open Investigation Graph', group: 'INVESTIGATE', icon: Network, action: () => onNavigate('graph') },
+    { id: 'nav-anomalies', label: 'Open Anomalies', group: 'INVESTIGATE', icon: AlertTriangle, action: () => onNavigate('anomalies') },
+    { id: 'nav-leads', label: 'Open Priority Leads', group: 'INVESTIGATE', icon: FileText, action: () => onNavigate('leads') },
+    { id: 'nav-cases', label: 'Open Cases', group: 'INVESTIGATE', icon: FolderKanban, action: () => onNavigate('cases') },
+    
+    { id: 'action-export', label: 'Export current data', group: 'ACTIONS', icon: Download, action: () => alert('Exporting data...') },
+    { id: 'action-refresh', label: 'Refresh analysis', group: 'ACTIONS', icon: RefreshCw, action: () => alert('Refreshing analysis...') },
+    
+    { id: 'sys-theme', label: `Toggle theme (${theme})`, group: 'SYSTEM', icon: Moon, action: () => setTheme(theme === 'dark' ? 'light' : 'dark') },
+    { id: 'sys-density', label: `Toggle density (${density})`, group: 'SYSTEM', icon: Columns, action: () => setDensity(density === 'compact' ? 'comfortable' : 'compact') },
+    { id: 'sys-sidebar', label: 'Toggle sidebar', group: 'SYSTEM', icon: Columns, action: () => setSidebarCollapsed(!sidebarCollapsed) },
+    { id: 'sys-logs', label: 'View system logs', group: 'SYSTEM', icon: Terminal, action: () => onNavigate('logs') },
+  ];
+
+  const filteredCommands = allCommands.filter(cmd => 
+    cmd.label.toLowerCase().includes(searchQuery.toLowerCase()) || 
+    cmd.group.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  useEffect(() => {
+    setSelectedIndex(0);
+  }, [searchQuery]);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!isOpen) return;
+      if (e.key === 'Escape') {
+        onClose();
+      } else if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        setSelectedIndex(prev => (prev < filteredCommands.length - 1 ? prev + 1 : prev));
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        setSelectedIndex(prev => (prev > 0 ? prev - 1 : prev));
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        if (filteredCommands[selectedIndex]) {
+          handleAction(filteredCommands[selectedIndex].action);
+        }
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose, filteredCommands, selectedIndex]);
+
   if (!isOpen) return null;
 
   const handleAction = (action: () => void) => {
     action();
     onClose();
   };
+
+  // Group filtered commands
+  const groups = filteredCommands.reduce((acc, cmd) => {
+    if (!acc[cmd.group]) acc[cmd.group] = [];
+    acc[cmd.group].push(cmd);
+    return acc;
+  }, {} as Record<string, typeof allCommands>);
+
+  let globalIndex = 0;
 
   return (
     <div className="fixed inset-0 z-[100] flex items-start justify-center pt-[15vh]">
@@ -61,65 +123,37 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose,
 
         {/* Command List */}
         <div className="overflow-y-auto flex-1 p-2">
-          
-          <div className="mb-4">
-            <div className="px-3 py-1.5 text-xs font-semibold text-content-400 tracking-wider">SEARCH</div>
-            <button className="w-full text-left flex items-center px-3 py-2 text-sm text-content-600 hover:bg-surface-100 rounded-md">
-              <Search className="w-4 h-4 mr-3 text-content-400" /> Search transaction...
-            </button>
-            <button className="w-full text-left flex items-center px-3 py-2 text-sm text-content-600 hover:bg-surface-100 rounded-md">
-              <Search className="w-4 h-4 mr-3 text-content-400" /> Search wallet...
-            </button>
-            <button className="w-full text-left flex items-center px-3 py-2 text-sm text-content-600 hover:bg-surface-100 rounded-md">
-              <Search className="w-4 h-4 mr-3 text-content-400" /> Search IP...
-            </button>
-            <button className="w-full text-left flex items-center px-3 py-2 text-sm text-content-600 hover:bg-surface-100 rounded-md">
-              <Search className="w-4 h-4 mr-3 text-content-400" /> Search entity...
-            </button>
-          </div>
-
-          <div className="mb-4">
-            <div className="px-3 py-1.5 text-xs font-semibold text-content-400 tracking-wider">INVESTIGATE</div>
-            <button onClick={() => handleAction(() => onNavigate('graph'))} className="w-full text-left flex items-center px-3 py-2 text-sm text-content-600 hover:bg-surface-100 rounded-md">
-              <Network className="w-4 h-4 mr-3 text-content-400" /> Open Investigation Graph
-            </button>
-            <button onClick={() => handleAction(() => onNavigate('anomalies'))} className="w-full text-left flex items-center px-3 py-2 text-sm text-content-600 hover:bg-surface-100 rounded-md">
-              <AlertTriangle className="w-4 h-4 mr-3 text-content-400" /> Open Anomalies
-            </button>
-            <button onClick={() => handleAction(() => onNavigate('leads'))} className="w-full text-left flex items-center px-3 py-2 text-sm text-content-600 hover:bg-surface-100 rounded-md">
-              <FileText className="w-4 h-4 mr-3 text-content-400" /> Open Priority Leads
-            </button>
-            <button onClick={() => handleAction(() => onNavigate('cases'))} className="w-full text-left flex items-center px-3 py-2 text-sm text-content-600 hover:bg-surface-100 rounded-md">
-              <FolderKanban className="w-4 h-4 mr-3 text-content-400" /> Open Cases
-            </button>
-          </div>
-
-          <div className="mb-4">
-            <div className="px-3 py-1.5 text-xs font-semibold text-content-400 tracking-wider">ACTIONS</div>
-            <button className="w-full text-left flex items-center px-3 py-2 text-sm text-content-600 hover:bg-surface-100 rounded-md">
-              <Download className="w-4 h-4 mr-3 text-content-400" /> Export current data
-            </button>
-            <button className="w-full text-left flex items-center px-3 py-2 text-sm text-content-600 hover:bg-surface-100 rounded-md">
-              <RefreshCw className="w-4 h-4 mr-3 text-content-400" /> Refresh analysis
-            </button>
-          </div>
-
-          <div className="mb-2">
-            <div className="px-3 py-1.5 text-xs font-semibold text-content-400 tracking-wider">SYSTEM</div>
-            <button onClick={() => handleAction(() => setTheme(theme === 'dark' ? 'light' : 'dark'))} className="w-full text-left flex items-center px-3 py-2 text-sm text-content-600 hover:bg-surface-100 rounded-md">
-              <Moon className="w-4 h-4 mr-3 text-content-400" /> Toggle theme ({theme})
-            </button>
-            <button onClick={() => handleAction(() => setDensity(density === 'compact' ? 'comfortable' : 'compact'))} className="w-full text-left flex items-center px-3 py-2 text-sm text-content-600 hover:bg-surface-100 rounded-md">
-              <Columns className="w-4 h-4 mr-3 text-content-400" /> Toggle density ({density})
-            </button>
-            <button onClick={() => handleAction(() => setSidebarCollapsed(!sidebarCollapsed))} className="w-full text-left flex items-center px-3 py-2 text-sm text-content-600 hover:bg-surface-100 rounded-md">
-              <Columns className="w-4 h-4 mr-3 text-content-400" /> Toggle sidebar
-            </button>
-            <button onClick={() => handleAction(() => onNavigate('logs'))} className="w-full text-left flex items-center px-3 py-2 text-sm text-content-600 hover:bg-surface-100 rounded-md">
-              <Terminal className="w-4 h-4 mr-3 text-content-400" /> View system logs
-            </button>
-          </div>
-
+          {Object.keys(groups).length === 0 ? (
+            <div className="py-8 text-center text-sm text-content-400">
+              No matching commands or entities found for "{searchQuery}".
+            </div>
+          ) : (
+            Object.entries(groups).map(([groupName, commands]) => (
+              <div key={groupName} className="mb-4">
+                <div className="px-3 py-1.5 text-xs font-semibold text-content-400 tracking-wider">{groupName}</div>
+                {commands.map((cmd) => {
+                  const currentIndex = globalIndex++;
+                  const Icon = cmd.icon;
+                  const isSelected = currentIndex === selectedIndex;
+                  return (
+                    <button 
+                      key={cmd.id}
+                      onClick={() => handleAction(cmd.action)} 
+                      onMouseEnter={() => setSelectedIndex(currentIndex)}
+                      className={`w-full text-left flex items-center px-3 py-2 text-sm rounded-md transition-all ${
+                        isSelected 
+                          ? 'bg-brand-600 text-white' 
+                          : 'text-content-600 hover:bg-surface-100'
+                      }`}
+                    >
+                      <Icon className={`w-4 h-4 mr-3 ${isSelected ? 'text-brand-200' : 'text-content-400'}`} /> 
+                      {cmd.label}
+                    </button>
+                  );
+                })}
+              </div>
+            ))
+          )}
         </div>
       </div>
     </div>

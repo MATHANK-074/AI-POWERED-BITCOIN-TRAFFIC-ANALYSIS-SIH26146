@@ -80,10 +80,10 @@ export const Overview: React.FC<OverviewProps> = ({ onNavigate }) => {
         ].map((card, idx) => {
           const Icon = card.icon;
           return (
-            <div key={idx} className="bg-surface-100 border border-surface-300 p-4 rounded-xl flex flex-col justify-between">
+            <div key={idx} className="bg-surface-100 border border-surface-300 p-4 rounded-xl flex flex-col justify-between transform transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-surface-400">
               <div className="flex items-center justify-between">
-                <span className="text-xs text-content-500 font-medium">{card.label}</span>
-                <Icon className={`w-4 h-4 ${card.color}`} />
+                <span className="text-xs text-content-500 font-medium tracking-wide">{card.label}</span>
+                <Icon className={`w-4 h-4 ${card.color} drop-shadow-sm`} />
               </div>
               <div className="mt-3">
                 <span className="text-xl font-bold font-mono text-brand-900 dark:text-brand-100">
@@ -109,8 +109,17 @@ export const Overview: React.FC<OverviewProps> = ({ onNavigate }) => {
                 <XAxis dataKey="name" stroke="var(--content-400)" fontSize={12} />
                 <YAxis stroke="var(--content-400)" fontSize={12} />
                 <Tooltip
-                  contentStyle={{ backgroundColor: 'var(--surface-50)', borderColor: 'var(--surface-300)', color: 'var(--content-700)' }}
-                  itemStyle={{ color: '#0369a1' }}
+                  cursor={{ fill: 'var(--surface-200)', opacity: 0.5 }}
+                  contentStyle={{ 
+                    backgroundColor: 'var(--surface-50)', 
+                    borderColor: 'var(--surface-300)', 
+                    color: 'var(--content-700)',
+                    borderRadius: '8px',
+                    boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)',
+                    fontSize: '12px',
+                    fontWeight: 500,
+                  }}
+                  itemStyle={{ color: 'var(--brand-600)' }}
                 />
                 <Bar dataKey="count" fill="#0369a1" radius={[4, 4, 0, 0]} />
               </BarChart>

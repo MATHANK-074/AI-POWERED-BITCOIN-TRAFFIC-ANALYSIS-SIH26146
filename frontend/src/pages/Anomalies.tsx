@@ -33,47 +33,50 @@ export const Anomalies: React.FC = () => {
         </p>
       </div>
 
-      <div className="bg-surface-100 border border-surface-300 rounded-xl overflow-hidden shadow-lg">
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs text-content-600">
-            <thead className="bg-surface-50 text-content-500 font-mono text-[11px] uppercase border-b border-surface-300">
+      <div className="bg-surface-100 border border-surface-300 rounded-xl shadow-lg flex flex-col">
+        <div className="overflow-x-auto overflow-y-auto max-h-[650px] rounded-xl custom-scrollbar">
+          <table className="w-full text-left text-xs text-content-600 relative">
+            <thead className="sticky top-0 z-10 bg-surface-50/95 backdrop-blur font-mono text-[10px] text-content-500 uppercase border-b border-surface-300 shadow-sm">
               <tr>
-                <th className="p-3">Entity ID</th>
-                <th className="p-3 text-right">Anomaly Score</th>
-                <th className="p-3 text-center">Is Anomaly</th>
-                <th className="p-3 text-right">Cluster ID</th>
-                <th className="p-3">Model Engine</th>
+                <th className="py-3 px-4 font-semibold tracking-wider">Entity ID</th>
+                <th className="py-3 px-4 text-right font-semibold tracking-wider">Anomaly Score</th>
+                <th className="py-3 px-4 text-center font-semibold tracking-wider">Is Anomaly</th>
+                <th className="py-3 px-4 text-right font-semibold tracking-wider">Cluster ID</th>
+                <th className="py-3 px-4 font-semibold tracking-wider">Model Engine</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-surface-300 font-mono">
+            <tbody className="divide-y divide-surface-200/50 font-mono">
               {loading ? (
                 <tr>
-                  <td colSpan={5} className="p-6 text-center text-content-400">
-                    Evaluating anomaly scores...
+                  <td colSpan={5} className="py-8 text-center text-content-400">
+                    <div className="flex items-center justify-center gap-2">
+                      <span className="w-4 h-4 border-2 border-brand-500 border-t-transparent rounded-full animate-spin"></span>
+                      Evaluating anomaly scores...
+                    </div>
                   </td>
                 </tr>
               ) : anomalies.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className="p-6 text-center text-content-400">
+                  <td colSpan={5} className="py-8 text-center text-content-400">
                     No anomalies detected.
                   </td>
                 </tr>
               ) : (
                 anomalies.map((a) => (
-                  <tr key={a.entity_id} className="hover:bg-surface-200 transition-all">
-                    <td className="p-3 text-brand-600 dark:text-brand-400 font-semibold truncate max-w-[200px]">{a.entity_id}</td>
-                    <td className="p-3 text-right font-bold text-warning-600">
+                  <tr key={a.entity_id} className="hover:bg-surface-50 transition-colors group">
+                    <td className="py-2.5 px-4 text-brand-600 dark:text-brand-400 font-semibold truncate max-w-[200px] group-hover:text-brand-500 transition-colors">{a.entity_id}</td>
+                    <td className="py-2.5 px-4 text-right font-bold text-warning-600">
                       {(a.normalized_anomaly_score ?? a.anomaly_score).toFixed(4)}
                     </td>
-                    <td className="p-3 text-center">
-                      <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-critical-50 text-critical-600 border border-critical-500">
+                    <td className="py-2.5 px-4 text-center">
+                      <span className="inline-flex items-center justify-center px-2 py-0.5 rounded text-[9px] font-bold tracking-widest bg-critical-500/10 text-critical-600 border border-critical-500/30 shadow-[0_0_8px_rgba(220,38,38,0.15)]">
                         ANOMALOUS
                       </span>
                     </td>
-                    <td className="p-3 text-right font-semibold text-brand-900 dark:text-brand-100">
+                    <td className="py-2.5 px-4 text-right font-semibold text-brand-900 dark:text-brand-100">
                       {a.cluster_id === -1 ? 'Outlier (Noise)' : a.cluster_id}
                     </td>
-                    <td className="p-3 text-content-500">{a.model_type || 'IsolationForest'}</td>
+                    <td className="py-2.5 px-4 text-content-500">{a.model_type || 'IsolationForest'}</td>
                   </tr>
                 ))
               )}

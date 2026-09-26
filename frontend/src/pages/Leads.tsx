@@ -59,24 +59,27 @@ export const Leads: React.FC = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Leads Table */}
-        <div className="lg:col-span-2 bg-surface-100 border border-surface-300 rounded-xl overflow-hidden shadow-lg">
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs text-content-600">
-              <thead className="bg-surface-50 text-content-500 font-mono text-[11px] uppercase border-b border-surface-300">
+        <div className="lg:col-span-2 bg-surface-100 border border-surface-300 rounded-xl shadow-lg flex flex-col">
+          <div className="overflow-x-auto overflow-y-auto max-h-[650px] rounded-xl custom-scrollbar">
+            <table className="w-full text-left text-xs text-content-600 relative">
+              <thead className="sticky top-0 z-10 bg-surface-50/95 backdrop-blur font-mono text-[10px] text-content-500 uppercase border-b border-surface-300 shadow-sm">
                 <tr>
-                  <th className="p-3">Lead ID</th>
-                  <th className="p-3">Target Entity</th>
-                  <th className="p-3 text-right">Priority Score</th>
-                  <th className="p-3 text-center">Priority Level</th>
-                  <th className="p-3 text-right">Confidence</th>
-                  <th className="p-3 text-center">Inspect</th>
+                  <th className="py-3 px-4 font-semibold tracking-wider">Lead ID</th>
+                  <th className="py-3 px-4 font-semibold tracking-wider">Target Entity</th>
+                  <th className="py-3 px-4 text-right font-semibold tracking-wider">Priority Score</th>
+                  <th className="py-3 px-4 text-center font-semibold tracking-wider">Priority Level</th>
+                  <th className="py-3 px-4 text-right font-semibold tracking-wider">Confidence</th>
+                  <th className="py-3 px-4 text-center font-semibold tracking-wider">Inspect</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-surface-300 font-mono">
+              <tbody className="divide-y divide-surface-200/50 font-mono">
                 {loading ? (
                   <tr>
-                    <td colSpan={6} className="p-6 text-center text-content-400">
-                      Generating prioritized investigative leads...
+                    <td colSpan={6} className="py-8 text-center text-content-400">
+                      <div className="flex items-center justify-center gap-2">
+                        <span className="w-4 h-4 border-2 border-brand-500 border-t-transparent rounded-full animate-spin"></span>
+                        Generating prioritized investigative leads...
+                      </div>
                     </td>
                   </tr>
                 ) : (
@@ -84,29 +87,29 @@ export const Leads: React.FC = () => {
                     <tr
                       key={lead.lead_id}
                       onClick={() => setSelectedLead(lead)}
-                      className={`cursor-pointer transition-all ${
-                        selectedLead?.lead_id === lead.lead_id ? 'bg-surface-200' : 'hover:bg-surface-200'
+                      className={`cursor-pointer transition-colors group ${
+                        selectedLead?.lead_id === lead.lead_id ? 'bg-brand-500/10' : 'hover:bg-surface-50'
                       }`}
                     >
-                      <td className="p-3 font-semibold text-brand-900 dark:text-brand-100">{lead.lead_id}</td>
-                      <td className="p-3 text-brand-600 dark:text-brand-400 truncate max-w-[140px]">{lead.entity_id}</td>
-                      <td className="p-3 text-right font-bold text-critical-600">{lead.priority_score}/100</td>
-                      <td className="p-3 text-center">
+                      <td className="py-2.5 px-4 font-semibold text-brand-900 dark:text-brand-100">{lead.lead_id}</td>
+                      <td className="py-2.5 px-4 text-brand-600 dark:text-brand-400 truncate max-w-[140px] group-hover:text-brand-500 transition-colors">{lead.entity_id}</td>
+                      <td className="py-2.5 px-4 text-right font-bold text-critical-600">{lead.priority_score}/100</td>
+                      <td className="py-2.5 px-4 text-center">
                         <span
-                          className={`px-2.5 py-0.5 rounded text-[10px] font-bold ${
+                          className={`inline-flex items-center justify-center px-2 py-0.5 rounded text-[9px] font-bold tracking-widest ${
                             lead.priority_level === 'CRITICAL'
-                              ? 'bg-critical-50 text-critical-600 border border-critical-500'
+                              ? 'bg-critical-500/10 text-critical-600 border border-critical-500/30 shadow-[0_0_8px_rgba(220,38,38,0.15)]'
                               : lead.priority_level === 'HIGH'
-                              ? 'bg-warning-50 text-warning-600 border border-warning-500'
-                              : 'bg-brand-500/20 text-brand-600 dark:text-brand-400 border border-brand-500/30'
+                              ? 'bg-warning-500/10 text-warning-600 border border-warning-500/30 shadow-[0_0_8px_rgba(234,179,8,0.15)]'
+                              : 'bg-brand-500/10 text-brand-600 dark:text-brand-400 border border-brand-500/30'
                           }`}
                         >
                           {lead.priority_level}
                         </span>
                       </td>
-                      <td className="p-3 text-right text-verified-600 font-semibold">{lead.confidence_score}</td>
-                      <td className="p-3 text-center">
-                        <button className="px-2 py-0.5 bg-surface-200 text-content-600 text-[10px] rounded">
+                      <td className="py-2.5 px-4 text-right text-verified-600 font-semibold">{lead.confidence_score}</td>
+                      <td className="py-2.5 px-4 text-center">
+                        <button className="px-2.5 py-1 bg-surface-200 hover:bg-brand-600 hover:text-white text-content-600 text-[10px] rounded transition-colors font-semibold">
                           View
                         </button>
                       </td>

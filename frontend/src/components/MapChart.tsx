@@ -23,7 +23,7 @@ export const MapChart: React.FC<MapChartProps> = ({ markers = [] }) => {
                 default: { outline: "none" },
                 hover: { fill: "#0284c7", outline: "none" },
                 pressed: { outline: "none" },
-              }}
+              } as any}
             />
           ))
         }

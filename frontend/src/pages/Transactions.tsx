@@ -82,51 +82,54 @@ export const Transactions: React.FC = () => {
       </div>
 
       {/* Transactions Table */}
-      <div className="bg-surface-100 border border-surface-300 rounded-xl overflow-hidden shadow-lg">
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs text-content-600">
-            <thead className="bg-surface-50 text-content-500 font-mono text-[11px] uppercase border-b border-surface-300">
+      <div className="bg-surface-100 border border-surface-300 rounded-xl shadow-lg flex flex-col">
+        <div className="overflow-x-auto overflow-y-auto max-h-[650px] rounded-xl custom-scrollbar">
+          <table className="w-full text-left text-xs text-content-600 relative">
+            <thead className="sticky top-0 z-10 bg-surface-50/95 backdrop-blur font-mono text-[10px] text-content-500 uppercase border-b border-surface-300 shadow-sm">
               <tr>
-                <th className="p-3">TXID</th>
-                <th className="p-3">Timestamp</th>
-                <th className="p-3">Source IP</th>
-                <th className="p-3">Input Wallet</th>
-                <th className="p-3">Output Wallet</th>
-                <th className="p-3 text-right">Amount (BTC)</th>
-                <th className="p-3 text-right">Fee (BTC)</th>
+                <th className="py-3 px-4 font-semibold tracking-wider">TXID</th>
+                <th className="py-3 px-4 font-semibold tracking-wider">Timestamp</th>
+                <th className="py-3 px-4 font-semibold tracking-wider">Source IP</th>
+                <th className="py-3 px-4 font-semibold tracking-wider">Input Wallet</th>
+                <th className="py-3 px-4 font-semibold tracking-wider">Output Wallet</th>
+                <th className="py-3 px-4 text-right font-semibold tracking-wider">Amount (BTC)</th>
+                <th className="py-3 px-4 text-right font-semibold tracking-wider">Fee (BTC)</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-surface-300 font-mono">
+            <tbody className="divide-y divide-surface-200/50 font-mono">
               {loading ? (
                 <tr>
-                  <td colSpan={7} className="p-6 text-center text-content-400">
-                    Loading transactions...
+                  <td colSpan={7} className="py-8 text-center text-content-400">
+                    <div className="flex items-center justify-center gap-2">
+                      <span className="w-4 h-4 border-2 border-brand-500 border-t-transparent rounded-full animate-spin"></span>
+                      Loading transactions...
+                    </div>
                   </td>
                 </tr>
               ) : txs.length === 0 ? (
                 <tr>
-                  <td colSpan={7} className="p-6 text-center text-content-400">
+                  <td colSpan={7} className="py-8 text-center text-content-400">
                     No transactions found.
                   </td>
                 </tr>
               ) : (
                 txs.map((tx) => (
-                  <tr key={tx.txid} className="hover:bg-surface-200 transition-all">
-                    <td className="p-3 text-brand-600 dark:text-brand-400 font-semibold truncate max-w-[120px]" title={tx.txid}>
+                  <tr key={tx.txid} className="hover:bg-surface-50 transition-colors group">
+                    <td className="py-2.5 px-4 text-brand-600 dark:text-brand-400 font-semibold truncate max-w-[120px] group-hover:text-brand-500 transition-colors" title={tx.txid}>
                       {tx.txid}
                     </td>
-                    <td className="p-3 text-content-500">{tx.timestamp || 'N/A'}</td>
-                    <td className="p-3 text-content-600">{tx.src_ip || 'UNKNOWN'}</td>
-                    <td className="p-3 text-content-600 truncate max-w-[140px]" title={tx.input_wallet}>
+                    <td className="py-2.5 px-4 text-content-500">{tx.timestamp || 'N/A'}</td>
+                    <td className="py-2.5 px-4 text-content-600">{tx.src_ip || 'UNKNOWN'}</td>
+                    <td className="py-2.5 px-4 text-content-600 truncate max-w-[140px]" title={tx.input_wallet}>
                       {tx.input_wallet || 'N/A'}
                     </td>
-                    <td className="p-3 text-content-600 truncate max-w-[140px]" title={tx.output_wallet}>
+                    <td className="py-2.5 px-4 text-content-600 truncate max-w-[140px]" title={tx.output_wallet}>
                       {tx.output_wallet || 'N/A'}
                     </td>
-                    <td className="p-3 text-right font-semibold text-verified-600">
+                    <td className="py-2.5 px-4 text-right font-semibold text-verified-600">
                       {(tx.amount_btc ?? 0).toFixed(6)}
                     </td>
-                    <td className="p-3 text-right text-content-500">
+                    <td className="py-2.5 px-4 text-right text-content-500">
                       {(tx.fee_btc ?? 0).toFixed(6)}
                     </td>
                   </tr>

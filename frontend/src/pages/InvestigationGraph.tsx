@@ -201,9 +201,9 @@ export const InvestigationGraph: React.FC = () => {
               style={{ width: '100%', height: '100%' }}
               layout={layout}
               stylesheet={stylesheet as any}
-              cy={(cy) => {
+              cy={(cy: any) => {
                 cyRef.current = cy;
-                cy.on('tap', 'node', (evt) => {
+                cy.on('tap', 'node', (evt: any) => {
                   setSelectedNode(evt.target.data());
                 });
               }}
@@ -212,9 +212,10 @@ export const InvestigationGraph: React.FC = () => {
         </div>
 
         {/* Selected Node Details Panel */}
-        <div className="bg-surface-100 border border-surface-300 p-5 rounded-xl flex flex-col justify-between shadow-lg">
+        <div className="bg-surface-100/95 backdrop-blur border border-surface-300 p-5 rounded-xl flex flex-col justify-between shadow-xl relative overflow-hidden">
+          <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-brand-500 to-purple-500"></div>
           <div>
-            <h3 className="text-sm font-semibold text-brand-900 dark:text-brand-100 mb-4 flex items-center gap-2">
+            <h3 className="text-sm font-semibold text-brand-900 dark:text-brand-100 mb-5 flex items-center gap-2">
               <Info className="w-4 h-4 text-brand-600 dark:text-brand-400" /> Graph Element Inspector
             </h3>
             {!selectedNode ? (
@@ -222,9 +223,9 @@ export const InvestigationGraph: React.FC = () => {
                 Click any node in the graph canvas to inspect its details, risk metrics, and audit evidence.
               </p>
             ) : (
-              <div className="space-y-3 font-mono text-xs">
-                <div className="p-3 bg-surface-50 rounded-lg">
-                  <span className="text-[10px] text-content-400 block">Node ID</span>
+              <div className="space-y-4 font-mono text-xs">
+                <div className="p-3 bg-surface-50 border border-surface-200 shadow-sm rounded-lg">
+                  <span className="text-[10px] text-content-400 block mb-1">Node ID</span>
                   <span className="text-xs font-bold text-brand-600 dark:text-brand-400 break-all">{selectedNode.id}</span>
                 </div>
                 <div className="p-3 bg-surface-50 rounded-lg">
