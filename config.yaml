@@ -1,0 +1,47 @@
+system:
+  name: "Offline Bitcoin Investigation & Analytics System"
+  version: "1.0.0"
+  offline_mode: true
+
+correlation:
+  time_windows_sec: [1, 5, 10, 30]
+  default_time_window_sec: 10
+  weights:
+    temporal: 0.6
+    network_match: 0.4
+
+validation:
+  min_transaction_amount_btc: 0.00000001
+  max_transaction_amount_btc: 21000000.0
+  max_fee_btc: 100.0
+
+ml:
+  anomaly_contamination: 0.05
+  anomaly_n_estimators: 100
+  dbscan_eps: 0.5
+  dbscan_min_samples: 5
+  kmeans_clusters: 5
+  random_state: 42
+
+priority_scoring:
+  weights:
+    anomaly: 0.35
+    correlation: 0.25
+    pattern: 0.25
+    graph: 0.15
+  thresholds:
+    lower_max: 30
+    moderate_max: 60
+    elevated_max: 80
+    high_min: 81
+
+storage:
+  duckdb_path: "data/processed/bitcoin_investigation.duckdb"
+  rejected_records_path: "data/processed/rejected_records.csv"
+  raw_dir: "data/raw"
+  synthetic_dir: "data/synthetic"
+  reports_dir: "reports"
+
+server:
+  host: "127.0.0.1"
+  port: 8000
