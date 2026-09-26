@@ -48,6 +48,13 @@ export const InvestigationGraph: React.FC = () => {
     fetchGraph();
   }, []);
 
+  // Pre-calculate degrees for smart node sizing
+  const nodeDegrees: Record<string, number> = {};
+  graphData.edges.forEach((e) => {
+    nodeDegrees[e.data.source] = (nodeDegrees[e.data.source] || 0) + 1;
+    nodeDegrees[e.data.target] = (nodeDegrees[e.data.target] || 0) + 1;
+  });
+
   const elements = [
     ...graphData.nodes.map((n) => ({
       data: {
@@ -56,6 +63,7 @@ export const InvestigationGraph: React.FC = () => {
         type: n.data.type,
         anomaly: n.data.anomaly_score || 0,
         is_anomaly: n.data.is_anomaly || false,
+        degree: nodeDegrees[n.data.id] || 0,
       },
     })),
     ...graphData.edges.map((e) => ({
@@ -68,10 +76,21 @@ export const InvestigationGraph: React.FC = () => {
     })),
   ];
 
+  // Upgraded physics engine parameters for 'cose' to separate clusters naturally
   const layout = {
     name: 'cose',
-    animate: false,
-    padding: 30,
+    animate: true,
+    animationDuration: 500,
+    padding: 50,
+    nodeRepulsion: () => 400000,
+    idealEdgeLength: () => 150,
+    edgeElasticity: () => 100,
+    nestingFactor: 5,
+    gravity: 80,
+    numIter: 1000,
+    initialTemp: 200,
+    coolingFactor: 0.95,
+    minTemp: 1.0,
   };
 
   const stylesheet = [
@@ -79,48 +98,73 @@ export const InvestigationGraph: React.FC = () => {
       selector: 'node',
       style: {
         label: 'data(label)',
-        'background-color': '#0369a1',
-        color: '#0f172a',
+        'background-color': '#3b82f6', // Default blue
+        color: '#f8fafc',
         'font-size': '10px',
         'text-valign': 'bottom',
-        'text-margin-y': 4,
-        width: '30px',
-        height: '30px',
+        'text-margin-y': 6,
+        'text-outline-width': 2,
+        'text-outline-color': '#0f172a',
+        // Scale width/height based on how connected the node is (degree)
+        width: 'mapData(degree, 0, 20, 25, 70)',
+        height: 'mapData(degree, 0, 20, 25, 70)',
+        shape: 'ellipse',
       },
     },
     {
       selector: 'node[type = "Wallet"]',
       style: {
-        'background-color': '#8b5cf6',
+        'background-color': '#a855f7', // Purple
+        shape: 'diamond',
       },
     },
     {
       selector: 'node[type = "IP"]',
       style: {
-        'background-color': '#06b6d4',
+        'background-color': '#06b6d4', // Cyan
+        shape: 'hexagon',
       },
     },
     {
       selector: 'node[is_anomaly = true]',
       style: {
-        'background-color': '#f43f5e',
-        borderWidth: '3px',
-        borderColor: '#fda4af',
+        'border-width': '4px',
+        'border-color': '#ef4444', // Red border instead of full fill
+        'border-style': 'solid',
       },
     },
     {
       selector: 'edge',
       style: {
-        width: 1.5,
-        'line-color': '#475569',
-        'target-arrow-color': '#475569',
+        width: 2.5,
+        'line-color': '#64748b',
+        'target-arrow-color': '#64748b',
         'target-arrow-shape': 'triangle',
         'curve-style': 'bezier',
         label: 'data(label)',
         'font-size': '8px',
-        color: '#475569',
+        color: '#cbd5e1',
+        'text-rotation': 'autorotate',
+        'text-outline-width': 1.5,
+        'text-outline-color': '#0f172a',
+        'arrow-scale': 1.5,
       },
     },
+    {
+      selector: 'node:selected',
+      style: {
+        'border-width': '5px',
+        'border-color': '#fcd34d', // Amber highlight
+      },
+    },
+    {
+      selector: 'edge:selected',
+      style: {
+        'line-color': '#fcd34d',
+        'target-arrow-color': '#fcd34d',
+        width: 4,
+      },
+    }
   ];
 
   return (

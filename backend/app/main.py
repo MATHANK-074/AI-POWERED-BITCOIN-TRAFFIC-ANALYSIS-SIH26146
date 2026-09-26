@@ -38,13 +38,18 @@ app.include_router(reports.router)
 Path(REPORTS_DIR).mkdir(parents=True, exist_ok=True)
 app.mount("/reports_static", StaticFiles(directory=REPORTS_DIR), name="reports_static")
 
-@app.get("/")
-def root():
-    return {
-        "system": "KRISHIGUARD - AI-Powered Offline Bitcoin Investigation System",
-        "status": "Online (Offline Mode)",
-        "docs_url": "/docs"
-    }
+# Serve React Frontend
+frontend_dist = Path(__file__).parent.parent.parent / "frontend" / "dist"
+if frontend_dist.exists():
+    app.mount("/", StaticFiles(directory=str(frontend_dist), html=True), name="frontend")
+else:
+    @app.get("/")
+    def root():
+        return {
+            "system": "KRISHIGUARD",
+            "status": "Online (Frontend Build Missing. Run 'npm run build' in frontend/)",
+            "docs_url": "/docs"
+        }
 
 if __name__ == "__main__":
     import uvicorn
