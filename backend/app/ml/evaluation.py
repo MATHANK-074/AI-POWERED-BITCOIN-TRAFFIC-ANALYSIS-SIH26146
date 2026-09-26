@@ -17,8 +17,8 @@ class ModelEvaluator:
         if has_ground_truth:
             # Binary ground truth: map positive labels vs normal (0)
             y_true = df[label_col].apply(lambda x: 0 if str(x).lower() in ["normal_activity", "normal", "none", "nan", "0", "false", ""] else 1).values
-            y_pred = df["is_anomaly"].astype(int).values if "is_anomaly" in df.columns else np.zeros(len(df))
-            y_scores = df["anomaly_score"].values if "anomaly_score" in df.columns else np.zeros(len(df))
+            y_pred = df["is_anomaly"].fillna(False).astype(int).values if "is_anomaly" in df.columns else np.zeros(len(df))
+            y_scores = df["anomaly_score"].fillna(0.0).values if "anomaly_score" in df.columns else np.zeros(len(df))
 
             precision = float(precision_score(y_true, y_pred, zero_division=0))
             recall = float(recall_score(y_true, y_pred, zero_division=0))

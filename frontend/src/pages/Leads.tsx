@@ -29,7 +29,7 @@ export const Leads: React.FC = () => {
     <div className="space-y-6">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
-          <h2 className="text-xl font-bold text-brand-900 flex items-center gap-2">
+          <h2 className="text-xl font-bold text-brand-900 dark:text-brand-100 flex items-center gap-2">
             <FileText className="w-5 h-5 text-critical-600" />
             Explainable Priority Investigative Leads
           </h2>
@@ -42,7 +42,7 @@ export const Leads: React.FC = () => {
             href="http://127.0.0.1:8000/api/export/leads/csv"
             target="_blank"
             rel="noreferrer"
-            className="px-3.5 py-2 bg-surface-200 hover:bg-surface-300 text-brand-900 text-xs font-medium rounded-lg border border-surface-400 transition-all flex items-center gap-1.5"
+            className="px-3.5 py-2 bg-surface-200 hover:bg-surface-300 text-brand-900 dark:text-brand-100 text-xs font-medium rounded-lg border border-surface-400 transition-all flex items-center gap-1.5"
           >
             <Download className="w-3.5 h-3.5" /> Leads CSV
           </a>
@@ -50,7 +50,7 @@ export const Leads: React.FC = () => {
             href="http://127.0.0.1:8000/api/export/report/html"
             target="_blank"
             rel="noreferrer"
-            className="px-3.5 py-2 bg-critical-600 hover:bg-critical-500 text-brand-900 text-xs font-medium rounded-lg transition-all flex items-center gap-1.5"
+            className="px-3.5 py-2 bg-critical-600 hover:bg-critical-500 text-white text-xs font-medium rounded-lg transition-all flex items-center gap-1.5"
           >
             <Download className="w-3.5 h-3.5" /> HTML Report
           </a>
@@ -88,8 +88,8 @@ export const Leads: React.FC = () => {
                         selectedLead?.lead_id === lead.lead_id ? 'bg-surface-200' : 'hover:bg-surface-200'
                       }`}
                     >
-                      <td className="p-3 font-semibold text-brand-900">{lead.lead_id}</td>
-                      <td className="p-3 text-brand-600 truncate max-w-[140px]">{lead.entity_id}</td>
+                      <td className="p-3 font-semibold text-brand-900 dark:text-brand-100">{lead.lead_id}</td>
+                      <td className="p-3 text-brand-600 dark:text-brand-400 truncate max-w-[140px]">{lead.entity_id}</td>
                       <td className="p-3 text-right font-bold text-critical-600">{lead.priority_score}/100</td>
                       <td className="p-3 text-center">
                         <span
@@ -98,7 +98,7 @@ export const Leads: React.FC = () => {
                               ? 'bg-critical-50 text-critical-600 border border-critical-500'
                               : lead.priority_level === 'HIGH'
                               ? 'bg-warning-50 text-warning-600 border border-warning-500'
-                              : 'bg-brand-500/20 text-brand-600 border border-brand-500/30'
+                              : 'bg-brand-500/20 text-brand-600 dark:text-brand-400 border border-brand-500/30'
                           }`}
                         >
                           {lead.priority_level}
@@ -121,7 +121,7 @@ export const Leads: React.FC = () => {
         {/* Explainable Lead Detail Card */}
         <div className="bg-surface-100 border border-surface-300 p-5 rounded-xl flex flex-col justify-between">
           <div>
-            <h3 className="text-sm font-semibold text-brand-900 mb-4 flex items-center gap-2">
+            <h3 className="text-sm font-semibold text-brand-900 dark:text-brand-100 mb-4 flex items-center gap-2">
               <AlertOctagon className="w-4 h-4 text-critical-600" /> Explainability & Audit Trail
             </h3>
 
@@ -132,7 +132,7 @@ export const Leads: React.FC = () => {
                 <div className="p-3 bg-surface-50 rounded-lg flex items-center justify-between">
                   <div>
                     <span className="text-[10px] text-content-400 block">Lead Identifier</span>
-                    <span className="text-xs font-bold text-brand-900">{selectedLead.lead_id}</span>
+                    <span className="text-xs font-bold text-brand-900 dark:text-brand-100">{selectedLead.lead_id}</span>
                   </div>
                   <span className="text-base font-bold text-critical-600">{selectedLead.priority_score}/100</span>
                 </div>

@@ -24,7 +24,7 @@ export const Anomalies: React.FC = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-xl font-bold text-brand-900 flex items-center gap-2">
+        <h2 className="text-xl font-bold text-brand-900 dark:text-brand-100 flex items-center gap-2">
           <AlertTriangle className="w-5 h-5 text-warning-600" />
           AI / ML Anomaly Detection Engine
         </h2>
@@ -61,7 +61,7 @@ export const Anomalies: React.FC = () => {
               ) : (
                 anomalies.map((a) => (
                   <tr key={a.entity_id} className="hover:bg-surface-200 transition-all">
-                    <td className="p-3 text-brand-600 font-semibold truncate max-w-[200px]">{a.entity_id}</td>
+                    <td className="p-3 text-brand-600 dark:text-brand-400 font-semibold truncate max-w-[200px]">{a.entity_id}</td>
                     <td className="p-3 text-right font-bold text-warning-600">
                       {(a.normalized_anomaly_score ?? a.anomaly_score).toFixed(4)}
                     </td>
@@ -70,7 +70,7 @@ export const Anomalies: React.FC = () => {
                         ANOMALOUS
                       </span>
                     </td>
-                    <td className="p-3 text-right font-semibold text-brand-900">
+                    <td className="p-3 text-right font-semibold text-brand-900 dark:text-brand-100">
                       {a.cluster_id === -1 ? 'Outlier (Noise)' : a.cluster_id}
                     </td>
                     <td className="p-3 text-content-500">{a.model_type || 'IsolationForest'}</td>

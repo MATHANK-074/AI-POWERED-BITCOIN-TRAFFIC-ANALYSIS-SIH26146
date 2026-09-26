@@ -39,12 +39,12 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab }) => {
         {/* Brand Header */}
         <div className="flex items-center gap-3">
           <div className="bg-gradient-to-tr from-brand-600 to-brand-700 p-2 rounded-lg shadow-lg shadow-brand-200/30">
-            <ShieldAlert className="w-6 h-6 text-brand-900" />
+            <ShieldAlert className="w-6 h-6 text-brand-900 dark:text-brand-100" />
           </div>
           <div>
-            <h1 className="text-lg font-bold tracking-tight text-brand-900 flex items-center gap-2">
+            <h1 className="text-lg font-bold tracking-tight text-brand-900 dark:text-brand-100 flex items-center gap-2">
               KRISHIGUARD
-              <span className="text-xs font-mono font-medium px-2 py-0.5 rounded bg-brand-100 text-brand-600 border border-cyan-800">
+              <span className="text-xs font-mono font-medium px-2 py-0.5 rounded bg-brand-100 text-brand-600 dark:text-brand-400 border border-cyan-800">
                 OFFLINE FORENSIC
               </span>
               <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded bg-warning-950/80 text-warning-600 border border-warning-800/80 animate-pulse">
@@ -66,11 +66,11 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab }) => {
                 onClick={() => setActiveTab(item.id)}
                 className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-medium transition-all ${
                   isActive
-                    ? 'bg-brand-500/10 text-brand-600 border border-brand-500/30 shadow-sm'
-                    : 'text-content-500 hover:text-brand-900 hover:bg-surface-200'
+                    ? 'bg-brand-500/10 text-brand-600 dark:text-brand-400 border border-brand-500/30 shadow-sm'
+                    : 'text-content-500 hover:text-brand-900 dark:text-brand-100 hover:bg-surface-200'
                 }`}
               >
-                <Icon className={`w-4 h-4 ${isActive ? 'text-brand-600' : 'text-content-500'}`} />
+                <Icon className={`w-4 h-4 ${isActive ? 'text-brand-600 dark:text-brand-400' : 'text-content-500'}`} />
                 {item.label}
               </button>
             );

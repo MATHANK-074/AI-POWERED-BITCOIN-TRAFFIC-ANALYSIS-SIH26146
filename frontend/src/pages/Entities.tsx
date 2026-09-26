@@ -37,7 +37,7 @@ export const Entities: React.FC = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-xl font-bold text-brand-900 flex items-center gap-2">
+        <h2 className="text-xl font-bold text-brand-900 dark:text-brand-100 flex items-center gap-2">
           <Users className="w-5 h-5 text-verified-600" />
           Entity Profile Explorer
         </h2>
@@ -55,12 +55,12 @@ export const Entities: React.FC = () => {
             placeholder="Search entity ID (Wallet Address or IP)..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full bg-surface-50 border border-surface-300 rounded-lg pl-9 pr-3 py-1.5 text-xs text-brand-900 placeholder-slate-500 focus:outline-none focus:border-brand-500"
+            className="w-full bg-surface-50 border border-surface-300 rounded-lg pl-9 pr-3 py-1.5 text-xs text-brand-900 dark:text-brand-100 placeholder-slate-500 focus:outline-none focus:border-brand-500"
           />
         </div>
         <button
           onClick={fetchEntities}
-          className="px-4 py-1.5 bg-verified-600 hover:bg-verified-500 text-brand-900 text-xs font-medium rounded-lg transition-all"
+          className="px-4 py-1.5 bg-verified-600 hover:bg-verified-500 text-white text-xs font-medium rounded-lg transition-all"
         >
           Search
         </button>
@@ -91,7 +91,7 @@ export const Entities: React.FC = () => {
                 ) : (
                   entities.map((e) => (
                     <tr key={e.entity_id} className="hover:bg-surface-200 transition-all">
-                      <td className="p-3 text-brand-600 font-semibold truncate max-w-[150px]" title={e.entity_id}>
+                      <td className="p-3 text-brand-600 dark:text-brand-400 font-semibold truncate max-w-[150px]" title={e.entity_id}>
                         {e.entity_id}
                       </td>
                       <td className="p-3 uppercase text-[10px]">
@@ -99,13 +99,13 @@ export const Entities: React.FC = () => {
                           className={`px-2 py-0.5 rounded font-bold ${
                             e.entity_type === 'wallet'
                               ? 'bg-purple-500/20 text-purple-400 border border-purple-500/30'
-                              : 'bg-brand-500/20 text-brand-600 border border-brand-500/30'
+                              : 'bg-brand-500/20 text-brand-600 dark:text-brand-400 border border-brand-500/30'
                           }`}
                         >
                           {e.entity_type}
                         </span>
                       </td>
-                      <td className="p-3 text-right font-semibold text-brand-900">{e.tx_count}</td>
+                      <td className="p-3 text-right font-semibold text-brand-900 dark:text-brand-100">{e.tx_count}</td>
                       <td className="p-3 text-right font-semibold text-verified-600">
                         {e.total_amount_btc.toFixed(4)}
                       </td>
@@ -113,7 +113,7 @@ export const Entities: React.FC = () => {
                       <td className="p-3 text-center">
                         <button
                           onClick={() => handleInspect(e.entity_id)}
-                          className="px-2.5 py-1 bg-surface-200 hover:bg-surface-300 text-brand-900 text-[11px] rounded transition-all"
+                          className="px-2.5 py-1 bg-surface-200 hover:bg-surface-300 text-brand-900 dark:text-brand-100 text-[11px] rounded transition-all"
                         >
                           Inspect
                         </button>
@@ -128,8 +128,8 @@ export const Entities: React.FC = () => {
 
         {/* Selected Entity Inspector Panel */}
         <div className="bg-surface-100 border border-surface-300 p-5 rounded-xl">
-          <h3 className="text-sm font-semibold text-brand-900 mb-4 flex items-center gap-2">
-            <UserCheck className="w-4 h-4 text-brand-600" /> Entity Detail Inspector
+          <h3 className="text-sm font-semibold text-brand-900 dark:text-brand-100 mb-4 flex items-center gap-2">
+            <UserCheck className="w-4 h-4 text-brand-600 dark:text-brand-400" /> Entity Detail Inspector
           </h3>
 
           {!selectedEntity ? (
@@ -140,13 +140,13 @@ export const Entities: React.FC = () => {
             <div className="space-y-4 text-xs font-mono">
               <div className="p-3 bg-surface-50 rounded-lg">
                 <span className="text-[11px] text-content-400 block">Entity ID</span>
-                <span className="text-xs font-bold text-brand-600 break-all">{selectedEntity.entity_profile.entity_id}</span>
+                <span className="text-xs font-bold text-brand-600 dark:text-brand-400 break-all">{selectedEntity.entity_profile.entity_id}</span>
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div className="p-2.5 bg-surface-50 rounded-lg">
                   <span className="text-[10px] text-content-400 block">Avg Amount</span>
-                  <span className="text-xs font-bold text-brand-900">{selectedEntity.entity_profile.avg_amount_btc} BTC</span>
+                  <span className="text-xs font-bold text-brand-900 dark:text-brand-100">{selectedEntity.entity_profile.avg_amount_btc} BTC</span>
                 </div>
                 <div className="p-2.5 bg-surface-50 rounded-lg">
                   <span className="text-[10px] text-content-400 block">Max Amount</span>
@@ -154,11 +154,11 @@ export const Entities: React.FC = () => {
                 </div>
                 <div className="p-2.5 bg-surface-50 rounded-lg">
                   <span className="text-[10px] text-content-400 block">In Degree</span>
-                  <span className="text-xs font-bold text-brand-900">{selectedEntity.entity_profile.in_degree}</span>
+                  <span className="text-xs font-bold text-brand-900 dark:text-brand-100">{selectedEntity.entity_profile.in_degree}</span>
                 </div>
                 <div className="p-2.5 bg-surface-50 rounded-lg">
                   <span className="text-[10px] text-content-400 block">Out Degree</span>
-                  <span className="text-xs font-bold text-brand-900">{selectedEntity.entity_profile.out_degree}</span>
+                  <span className="text-xs font-bold text-brand-900 dark:text-brand-100">{selectedEntity.entity_profile.out_degree}</span>
                 </div>
               </div>
 

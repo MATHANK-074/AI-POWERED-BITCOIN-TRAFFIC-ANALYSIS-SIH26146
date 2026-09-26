@@ -4,6 +4,7 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
@@ -21,19 +22,19 @@ export default {
           950: '#082f49',
         },
         surface: {
-          50: '#ffffff', // White background
-          100: '#f8fafc', // Very light blue-gray secondary background
-          200: '#f1f5f9',
-          300: '#e2e8f0',
-          400: '#cbd5e1',
+          50: 'var(--surface-50)',
+          100: 'var(--surface-100)',
+          200: 'var(--surface-200)',
+          300: 'var(--surface-300)',
+          400: 'var(--surface-400)',
         },
         content: {
-          200: '#94a3b8', // Neutral gray for inactive elements
-          300: '#64748b',
-          400: '#475569',
-          500: '#334155',
-          600: '#1e293b',
-          700: '#0f172a', // Dark charcoal text
+          200: 'var(--content-200)',
+          300: 'var(--content-300)',
+          400: 'var(--content-400)',
+          500: 'var(--content-500)',
+          600: 'var(--content-600)',
+          700: 'var(--content-700)',
         },
         critical: {
           500: '#ef4444', // Red for suspicious/critical

@@ -33,8 +33,8 @@ export const DataIngestion: React.FC = () => {
   return (
     <div className="space-y-6 max-w-5xl mx-auto">
       <div>
-        <h2 className="text-xl font-bold text-brand-900 flex items-center gap-2">
-          <UploadCloud className="w-5 h-5 text-brand-600" />
+        <h2 className="text-xl font-bold text-brand-900 dark:text-brand-100 flex items-center gap-2">
+          <UploadCloud className="w-5 h-5 text-brand-600 dark:text-brand-400" />
           Bulk Heterogeneous Data Ingestion
         </h2>
         <p className="text-xs text-content-500 mt-1">
@@ -45,11 +45,11 @@ export const DataIngestion: React.FC = () => {
 
       {/* Upload Zone */}
       <div className="bg-surface-100 border-2 border-dashed border-surface-400 hover:border-brand-500/50 transition-all rounded-xl p-8 text-center flex flex-col items-center justify-center gap-4">
-        <div className="p-4 bg-surface-200 rounded-full text-brand-600">
+        <div className="p-4 bg-surface-200 rounded-full text-brand-600 dark:text-brand-400">
           <FileCode className="w-8 h-8" />
         </div>
         <div>
-          <p className="text-sm font-medium text-brand-900">
+          <p className="text-sm font-medium text-brand-900 dark:text-brand-100">
             {selectedFile ? selectedFile.name : 'Select CSV, JSON, JSONL, or XML file'}
           </p>
           <p className="text-xs text-content-400 mt-1">Maximum file size chunked automatically</p>
@@ -64,14 +64,14 @@ export const DataIngestion: React.FC = () => {
         <div className="flex gap-3">
           <label
             htmlFor="file-upload-input"
-            className="px-4 py-2 bg-surface-200 hover:bg-surface-300 text-brand-900 text-xs font-medium rounded-lg cursor-pointer transition-all"
+            className="px-4 py-2 bg-surface-200 hover:bg-surface-300 text-brand-900 dark:text-brand-100 text-xs font-medium rounded-lg cursor-pointer transition-all"
           >
             Browse Files
           </label>
           <button
             onClick={handleUpload}
             disabled={!selectedFile || uploading}
-            className={`px-5 py-2 text-xs font-medium rounded-lg text-brand-900 shadow-md transition-all ${
+            className={`px-5 py-2 text-xs font-medium rounded-lg text-brand-900 dark:text-brand-100 shadow-md transition-all ${
               !selectedFile || uploading
                 ? 'bg-surface-200 text-content-400 cursor-not-allowed'
                 : 'bg-brand-600 hover:bg-brand-500 shadow-brand-200/30'
@@ -105,13 +105,13 @@ export const DataIngestion: React.FC = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="bg-surface-50 p-3 rounded-lg">
               <span className="text-[11px] text-content-500 block">Filename</span>
-              <span className="text-xs font-mono font-semibold text-brand-900 truncate block">
+              <span className="text-xs font-mono font-semibold text-brand-900 dark:text-brand-100 truncate block">
                 {result.ingestion_stats.filename}
               </span>
             </div>
             <div className="bg-surface-50 p-3 rounded-lg">
               <span className="text-[11px] text-content-500 block">Format</span>
-              <span className="text-xs font-mono font-semibold text-brand-600 block">
+              <span className="text-xs font-mono font-semibold text-brand-600 dark:text-brand-400 block">
                 {result.ingestion_stats.format}
               </span>
             </div>

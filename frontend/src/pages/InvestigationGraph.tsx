@@ -128,8 +128,8 @@ export const InvestigationGraph: React.FC = () => {
       {/* Header controls */}
       <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
         <div>
-          <h2 className="text-xl font-bold text-brand-900 flex items-center gap-2">
-            <Network className="w-5 h-5 text-brand-600" />
+          <h2 className="text-xl font-bold text-brand-900 dark:text-brand-100 flex items-center gap-2">
+            <Network className="w-5 h-5 text-brand-600 dark:text-brand-400" />
             Interactive Investigation Graph
           </h2>
           <p className="text-xs text-content-500 mt-1">
@@ -145,7 +145,7 @@ export const InvestigationGraph: React.FC = () => {
               placeholder="Source Node ID..."
               value={sourceNode}
               onChange={(e) => setSourceNode(e.target.value)}
-              className="bg-transparent text-xs text-brand-900 px-2 py-1 focus:outline-none w-28"
+              className="bg-transparent text-xs text-brand-900 dark:text-brand-100 px-2 py-1 focus:outline-none w-28"
             />
             <span className="text-content-400 text-xs">→</span>
             <input
@@ -153,11 +153,11 @@ export const InvestigationGraph: React.FC = () => {
               placeholder="Target Node ID..."
               value={targetNode}
               onChange={(e) => setTargetNode(e.target.value)}
-              className="bg-transparent text-xs text-brand-900 px-2 py-1 focus:outline-none w-28"
+              className="bg-transparent text-xs text-brand-900 dark:text-brand-100 px-2 py-1 focus:outline-none w-28"
             />
             <button
               onClick={handlePathSearch}
-              className="px-2.5 py-1 bg-purple-600 hover:bg-purple-500 text-brand-900 text-xs font-medium rounded transition-all flex items-center gap-1"
+              className="px-2.5 py-1 bg-purple-600 hover:bg-purple-500 text-white text-xs font-medium rounded transition-all flex items-center gap-1"
             >
               <GitCommit className="w-3.5 h-3.5" /> Find Path
             </button>
@@ -170,11 +170,11 @@ export const InvestigationGraph: React.FC = () => {
               placeholder="Focus node ID..."
               value={centerNode}
               onChange={(e) => setCenterNode(e.target.value)}
-              className="bg-surface-50 border border-surface-300 rounded-lg px-3 py-1.5 text-xs text-brand-900 placeholder-slate-500 focus:outline-none focus:border-brand-500 w-36"
+              className="bg-surface-50 border border-surface-300 rounded-lg px-3 py-1.5 text-xs text-brand-900 dark:text-brand-100 placeholder-slate-500 focus:outline-none focus:border-brand-500 w-36"
             />
             <button
               onClick={() => fetchGraph(centerNode)}
-              className="px-3.5 py-1.5 bg-brand-600 hover:bg-brand-500 text-brand-900 text-xs font-medium rounded-lg transition-all flex items-center gap-1.5"
+              className="px-3.5 py-1.5 bg-brand-600 hover:bg-brand-500 text-white text-xs font-medium rounded-lg transition-all flex items-center gap-1.5"
             >
               <Search className="w-3.5 h-3.5" /> Subgraph
             </button>
@@ -214,8 +214,8 @@ export const InvestigationGraph: React.FC = () => {
         {/* Selected Node Details Panel */}
         <div className="bg-surface-100 border border-surface-300 p-5 rounded-xl flex flex-col justify-between shadow-lg">
           <div>
-            <h3 className="text-sm font-semibold text-brand-900 mb-4 flex items-center gap-2">
-              <Info className="w-4 h-4 text-brand-600" /> Graph Element Inspector
+            <h3 className="text-sm font-semibold text-brand-900 dark:text-brand-100 mb-4 flex items-center gap-2">
+              <Info className="w-4 h-4 text-brand-600 dark:text-brand-400" /> Graph Element Inspector
             </h3>
             {!selectedNode ? (
               <p className="text-xs text-content-400 py-10 text-center">
@@ -225,11 +225,11 @@ export const InvestigationGraph: React.FC = () => {
               <div className="space-y-3 font-mono text-xs">
                 <div className="p-3 bg-surface-50 rounded-lg">
                   <span className="text-[10px] text-content-400 block">Node ID</span>
-                  <span className="text-xs font-bold text-brand-600 break-all">{selectedNode.id}</span>
+                  <span className="text-xs font-bold text-brand-600 dark:text-brand-400 break-all">{selectedNode.id}</span>
                 </div>
                 <div className="p-3 bg-surface-50 rounded-lg">
                   <span className="text-[10px] text-content-400 block">Type</span>
-                  <span className="text-xs font-bold text-brand-900">{selectedNode.type}</span>
+                  <span className="text-xs font-bold text-brand-900 dark:text-brand-100">{selectedNode.type}</span>
                 </div>
                 <div className="p-3 bg-surface-50 rounded-lg">
                   <span className="text-[10px] text-content-400 block">Anomaly Score</span>

@@ -35,13 +35,13 @@ export const EvidencePanel: React.FC<EvidencePanelProps> = ({ entityId, onClose 
             <div className="flex items-center gap-2">
               <ShieldAlert className="w-6 h-6 text-critical-600" />
               <div>
-                <h3 className="text-base font-bold text-brand-900">Evidence & Audit Traceability</h3>
+                <h3 className="text-base font-bold text-brand-900 dark:text-brand-100">Evidence & Audit Traceability</h3>
                 <p className="text-xs text-content-500 font-mono">Entity Target: {entityId}</p>
               </div>
             </div>
             <button
               onClick={onClose}
-              className="p-1.5 text-content-500 hover:text-brand-900 bg-surface-200 rounded-lg transition-all"
+              className="p-1.5 text-content-500 hover:text-brand-900 dark:text-brand-100 bg-surface-200 rounded-lg transition-all"
             >
               <X className="w-5 h-5" />
             </button>
@@ -75,7 +75,7 @@ export const EvidencePanel: React.FC<EvidencePanelProps> = ({ entityId, onClose 
                       </div>
                       <div className="p-2.5 bg-surface-100 rounded border border-surface-300">
                         <span className="text-content-500 block text-[10px]">Anomaly Score</span>
-                        <span className="text-brand-600 font-bold text-base">{features.anomaly_score ?? 'N/A'}</span>
+                        <span className="text-brand-600 dark:text-brand-400 font-bold text-base">{features.anomaly_score ?? 'N/A'}</span>
                       </div>
                       <div className="p-2.5 bg-surface-100 rounded border border-surface-300">
                         <span className="text-content-500 block text-[10px]">Correlation Confidence</span>
@@ -96,22 +96,22 @@ export const EvidencePanel: React.FC<EvidencePanelProps> = ({ entityId, onClose 
 
                   {/* Q2: Where did this evidence come from? */}
                   <div className="p-4 bg-surface-50 border border-surface-300 rounded-xl space-y-3">
-                    <h4 className="text-xs font-bold text-brand-600 uppercase flex items-center gap-1.5 font-mono">
-                      <Database className="w-4 h-4 text-brand-600" />
+                    <h4 className="text-xs font-bold text-brand-600 dark:text-brand-400 uppercase flex items-center gap-1.5 font-mono">
+                      <Database className="w-4 h-4 text-brand-600 dark:text-brand-400" />
                       2. Where did this evidence come from?
                     </h4>
                     <div className="space-y-2 text-xs font-mono">
                       <div className="flex justify-between py-1 border-b border-surface-300">
                         <span className="text-content-500">Source File:</span>
-                        <span className="text-brand-900 font-semibold">{ev.source_file}</span>
+                        <span className="text-brand-900 dark:text-brand-100 font-semibold">{ev.source_file}</span>
                       </div>
                       <div className="flex justify-between py-1 border-b border-surface-300">
                         <span className="text-content-500">Record Row Index:</span>
-                        <span className="text-brand-900">#{ev.source_record_index}</span>
+                        <span className="text-brand-900 dark:text-brand-100">#{ev.source_record_index}</span>
                       </div>
                       <div className="flex justify-between py-1 border-b border-surface-300">
                         <span className="text-content-500">Pipeline Ingestion Stage:</span>
-                        <span className="text-brand-900">{ev.pipeline_stage}</span>
+                        <span className="text-brand-900 dark:text-brand-100">{ev.pipeline_stage}</span>
                       </div>
                       <div className="flex justify-between py-1 border-b border-surface-300">
                         <span className="text-content-500">ML Model Engine:</span>
@@ -132,7 +132,7 @@ export const EvidencePanel: React.FC<EvidencePanelProps> = ({ entityId, onClose 
         <div className="pt-4 border-t border-surface-300 flex justify-end">
           <button
             onClick={onClose}
-            className="px-4 py-2 bg-surface-200 hover:bg-surface-300 text-brand-900 text-xs font-semibold rounded-lg transition-all"
+            className="px-4 py-2 bg-surface-200 hover:bg-surface-300 text-brand-900 dark:text-brand-100 text-xs font-semibold rounded-lg transition-all"
           >
             Close Audit Trail
           </button>

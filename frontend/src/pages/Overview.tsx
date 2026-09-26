@@ -49,7 +49,7 @@ export const Overview: React.FC<OverviewProps> = ({ onNavigate }) => {
       {/* Header Banner */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-surface-100 border border-surface-300 p-6 rounded-xl shadow-lg">
         <div>
-          <h2 className="text-2xl font-bold text-brand-900 flex items-center gap-2">
+          <h2 className="text-2xl font-bold text-brand-900 dark:text-brand-100 flex items-center gap-2">
             Investigator Command Center
             <span className="text-xs font-mono font-medium px-2.5 py-1 rounded-full bg-verified-50 text-verified-600 border border-verified-500">
               OFFLINE READY
@@ -61,7 +61,7 @@ export const Overview: React.FC<OverviewProps> = ({ onNavigate }) => {
         </div>
         <button
           onClick={() => onNavigate('ingestion')}
-          className="px-4 py-2.5 bg-gradient-to-r from-brand-600 to-brand-700 hover:from-brand-500 hover:to-brand-600 text-brand-900 font-medium rounded-lg text-xs shadow-md shadow-brand-200/30 transition-all flex items-center gap-2"
+          className="px-4 py-2.5 bg-gradient-to-r from-brand-500 to-brand-600 hover:from-brand-400 hover:to-brand-500 text-white font-semibold rounded-lg text-xs shadow-md shadow-brand-500/20 transition-all flex items-center gap-2"
         >
           <ShieldAlert className="w-4 h-4" />
           Ingest Dataset
@@ -73,7 +73,7 @@ export const Overview: React.FC<OverviewProps> = ({ onNavigate }) => {
         {[
           { label: 'Total Transactions', val: stats?.total_transactions, icon: ListFilter, color: 'text-blue-400' },
           { label: 'Unique Wallets', val: stats?.total_wallets, icon: Users, color: 'text-verified-600' },
-          { label: 'Network IPs', val: stats?.total_ips, icon: Network, color: 'text-brand-600' },
+          { label: 'Network IPs', val: stats?.total_ips, icon: Network, color: 'text-brand-600 dark:text-brand-400' },
           { label: 'Correlated Events', val: stats?.correlated_events, icon: Network, color: 'text-purple-400' },
           { label: 'Detected Anomalies', val: stats?.anomalies_detected, icon: AlertTriangle, color: 'text-warning-600' },
           { label: 'Priority Leads', val: stats?.investigation_leads, icon: FileText, color: 'text-critical-600' },
@@ -86,7 +86,7 @@ export const Overview: React.FC<OverviewProps> = ({ onNavigate }) => {
                 <Icon className={`w-4 h-4 ${card.color}`} />
               </div>
               <div className="mt-3">
-                <span className="text-xl font-bold font-mono text-brand-900">
+                <span className="text-xl font-bold font-mono text-brand-900 dark:text-brand-100">
                   {loading ? '...' : (card.val ?? 0).toLocaleString()}
                 </span>
               </div>
@@ -99,17 +99,17 @@ export const Overview: React.FC<OverviewProps> = ({ onNavigate }) => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Breakdown Chart */}
         <div className="lg:col-span-2 bg-surface-100 border border-surface-300 p-5 rounded-xl">
-          <h3 className="text-sm font-semibold text-brand-900 mb-4 flex items-center gap-2">
+          <h3 className="text-sm font-semibold text-brand-900 dark:text-brand-100 mb-4 flex items-center gap-2">
             Dataset Summary Breakdown
           </h3>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={chartData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-                <XAxis dataKey="name" stroke="#475569" fontSize={12} />
-                <YAxis stroke="#475569" fontSize={12} />
+                <CartesianGrid strokeDasharray="3 3" stroke="var(--surface-300)" />
+                <XAxis dataKey="name" stroke="var(--content-400)" fontSize={12} />
+                <YAxis stroke="var(--content-400)" fontSize={12} />
                 <Tooltip
-                  contentStyle={{ backgroundColor: '#ffffff', borderColor: '#e2e8f0', color: '#0f172a' }}
+                  contentStyle={{ backgroundColor: 'var(--surface-50)', borderColor: 'var(--surface-300)', color: 'var(--content-700)' }}
                   itemStyle={{ color: '#0369a1' }}
                 />
                 <Bar dataKey="count" fill="#0369a1" radius={[4, 4, 0, 0]} />
@@ -122,12 +122,12 @@ export const Overview: React.FC<OverviewProps> = ({ onNavigate }) => {
         <div className="bg-surface-100 border border-surface-300 p-5 rounded-xl flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-sm font-semibold text-brand-900 flex items-center gap-2">
+              <h3 className="text-sm font-semibold text-brand-900 dark:text-brand-100 flex items-center gap-2">
                 Top Priority Leads
               </h3>
               <button
                 onClick={() => onNavigate('leads')}
-                className="text-xs text-brand-600 hover:text-brand-500 flex items-center gap-1 font-medium"
+                className="text-xs text-brand-600 dark:text-brand-400 hover:text-brand-500 flex items-center gap-1 font-medium"
               >
                 View All <ArrowUpRight className="w-3.5 h-3.5" />
               </button>
@@ -144,7 +144,7 @@ export const Overview: React.FC<OverviewProps> = ({ onNavigate }) => {
                   >
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="text-xs font-mono font-semibold text-brand-900">{lead.lead_id}</span>
+                        <span className="text-xs font-mono font-semibold text-brand-900 dark:text-brand-100">{lead.lead_id}</span>
                         <span
                           className={`text-[10px] font-mono px-2 py-0.5 rounded font-semibold ${
                             lead.priority_level === 'CRITICAL'
@@ -159,7 +159,7 @@ export const Overview: React.FC<OverviewProps> = ({ onNavigate }) => {
                         {lead.entity_id}
                       </p>
                     </div>
-                    <span className="text-xs font-mono font-bold text-brand-600">{lead.priority_score}/100</span>
+                    <span className="text-xs font-mono font-bold text-brand-600 dark:text-brand-400">{lead.priority_score}/100</span>
                   </div>
                 ))}
               </div>
@@ -170,7 +170,7 @@ export const Overview: React.FC<OverviewProps> = ({ onNavigate }) => {
 
       {/* Map Section */}
       <div className="bg-surface-100 border border-surface-300 p-5 rounded-xl">
-        <h3 className="text-sm font-semibold text-brand-900 mb-4 flex items-center gap-2">
+        <h3 className="text-sm font-semibold text-brand-900 dark:text-brand-100 mb-4 flex items-center gap-2">
           Global IP Geographic Distribution
         </h3>
         <div className="w-full h-96">

@@ -90,8 +90,8 @@ export const Cases: React.FC = () => {
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
-          <h2 className="text-xl font-bold text-brand-900 flex items-center gap-2">
-            <FolderKanban className="w-5 h-5 text-brand-600" />
+          <h2 className="text-xl font-bold text-brand-900 dark:text-brand-100 flex items-center gap-2">
+            <FolderKanban className="w-5 h-5 text-brand-600 dark:text-brand-400" />
             Investigation Case Management
           </h2>
           <p className="text-xs text-content-500 mt-1">
@@ -100,7 +100,7 @@ export const Cases: React.FC = () => {
         </div>
         <button
           onClick={() => setIsCreateOpen(true)}
-          className="px-3.5 py-2 bg-brand-600 hover:bg-brand-500 text-brand-900 text-xs font-semibold rounded-lg transition-all flex items-center gap-1.5 shadow-lg"
+          className="px-3.5 py-2 bg-brand-600 hover:bg-brand-500 text-white text-xs font-semibold rounded-lg transition-all flex items-center gap-1.5 shadow-lg"
         >
           <Plus className="w-4 h-4" /> Create New Case
         </button>
@@ -143,7 +143,7 @@ export const Cases: React.FC = () => {
                         selectedCase?.case_id === c.case_id ? 'bg-surface-200' : 'hover:bg-surface-200'
                       }`}
                     >
-                      <td className="p-3 font-semibold text-brand-900">{c.case_id}</td>
+                      <td className="p-3 font-semibold text-brand-900 dark:text-brand-100">{c.case_id}</td>
                       <td className="p-3 font-medium text-content-700">{c.title}</td>
                       <td className="p-3 text-center">
                         <span
@@ -151,7 +151,7 @@ export const Cases: React.FC = () => {
                             c.status === 'OPEN'
                               ? 'bg-warning-50 text-warning-600 border border-warning-500'
                               : c.status === 'UNDER INVESTIGATION'
-                              ? 'bg-brand-500/20 text-brand-600 border border-brand-500/30'
+                              ? 'bg-brand-500/20 text-brand-600 dark:text-brand-400 border border-brand-500/30'
                               : c.status === 'RESOLVED'
                               ? 'bg-verified-500/20 text-verified-600 border border-verified-500/30'
                               : 'bg-surface-300 text-content-500'
@@ -185,10 +185,10 @@ export const Cases: React.FC = () => {
           {selectedCase ? (
             <div className="space-y-4 font-mono text-xs">
               <div className="flex justify-between items-center border-b border-surface-300 pb-3">
-                <span className="font-bold text-sm text-brand-600">{selectedCase.case_id}</span>
+                <span className="font-bold text-sm text-brand-600 dark:text-brand-400">{selectedCase.case_id}</span>
                 <button
                   onClick={() => handleExport(selectedCase.case_id)}
-                  className="px-2.5 py-1 bg-surface-200 hover:bg-surface-300 text-brand-900 text-[11px] rounded border border-surface-400 flex items-center gap-1 transition-all"
+                  className="px-2.5 py-1 bg-surface-200 hover:bg-surface-300 text-brand-900 dark:text-brand-100 text-[11px] rounded border border-surface-400 flex items-center gap-1 transition-all"
                 >
                   <Download className="w-3 h-3" /> Export Report
                 </button>
@@ -208,7 +208,7 @@ export const Cases: React.FC = () => {
 
               <div>
                 <span className="text-content-500 text-[10px] uppercase block mb-1">Target Entities / Wallets</span>
-                <div className="p-2.5 bg-surface-50 rounded border border-surface-300 space-y-1 text-brand-600">
+                <div className="p-2.5 bg-surface-50 rounded border border-surface-300 space-y-1 text-brand-600 dark:text-brand-400">
                   {typeof selectedCase.entities === 'string'
                     ? selectedCase.entities
                     : selectedCase.entities.length > 0
@@ -242,10 +242,10 @@ export const Cases: React.FC = () => {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-surface-50 backdrop-blur-sm p-4">
           <div className="w-full max-w-lg bg-surface-100 border border-surface-300 rounded-xl p-6 shadow-2xl space-y-5">
             <div className="flex justify-between items-center border-b border-surface-300 pb-3">
-              <h3 className="text-sm font-bold text-brand-900 flex items-center gap-2">
-                <FolderKanban className="w-4 h-4 text-brand-600" /> Create Investigation Case
+              <h3 className="text-sm font-bold text-brand-900 dark:text-brand-100 flex items-center gap-2">
+                <FolderKanban className="w-4 h-4 text-brand-600 dark:text-brand-400" /> Create Investigation Case
               </h3>
-              <button onClick={() => setIsCreateOpen(false)} className="text-content-500 hover:text-brand-900">
+              <button onClick={() => setIsCreateOpen(false)} className="text-content-500 hover:text-brand-900 dark:text-brand-100">
                 <X className="w-4 h-4" />
               </button>
             </div>
@@ -259,7 +259,7 @@ export const Cases: React.FC = () => {
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   placeholder="e.g. Operation Darknet Wallet Cluster Analysis"
-                  className="w-full bg-surface-50 border border-surface-300 rounded p-2.5 text-brand-900 focus:outline-none focus:border-brand-500"
+                  className="w-full bg-surface-50 border border-surface-300 rounded p-2.5 text-brand-900 dark:text-brand-100 focus:outline-none focus:border-brand-500"
                 />
               </div>
 
@@ -270,7 +270,7 @@ export const Cases: React.FC = () => {
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   placeholder="Brief summary of investigative scope..."
-                  className="w-full bg-surface-50 border border-surface-300 rounded p-2.5 text-brand-900 focus:outline-none focus:border-brand-500 font-sans"
+                  className="w-full bg-surface-50 border border-surface-300 rounded p-2.5 text-brand-900 dark:text-brand-100 focus:outline-none focus:border-brand-500 font-sans"
                 />
               </div>
 
@@ -280,7 +280,7 @@ export const Cases: React.FC = () => {
                   <select
                     value={status}
                     onChange={(e: any) => setStatus(e.target.value)}
-                    className="w-full bg-surface-50 border border-surface-300 rounded p-2.5 text-brand-900 focus:outline-none focus:border-brand-500"
+                    className="w-full bg-surface-50 border border-surface-300 rounded p-2.5 text-brand-900 dark:text-brand-100 focus:outline-none focus:border-brand-500"
                   >
                     <option value="OPEN">OPEN</option>
                     <option value="UNDER INVESTIGATION">UNDER INVESTIGATION</option>
@@ -294,7 +294,7 @@ export const Cases: React.FC = () => {
                     type="text"
                     value={assignedTo}
                     onChange={(e) => setAssignedTo(e.target.value)}
-                    className="w-full bg-surface-50 border border-surface-300 rounded p-2.5 text-brand-900 focus:outline-none focus:border-brand-500"
+                    className="w-full bg-surface-50 border border-surface-300 rounded p-2.5 text-brand-900 dark:text-brand-100 focus:outline-none focus:border-brand-500"
                   />
                 </div>
               </div>
@@ -306,7 +306,7 @@ export const Cases: React.FC = () => {
                   value={entitiesInput}
                   onChange={(e) => setEntitiesInput(e.target.value)}
                   placeholder="e.g. 192.168.1.50, bc1qtest1..."
-                  className="w-full bg-surface-50 border border-surface-300 rounded p-2.5 text-brand-900 focus:outline-none focus:border-brand-500"
+                  className="w-full bg-surface-50 border border-surface-300 rounded p-2.5 text-brand-900 dark:text-brand-100 focus:outline-none focus:border-brand-500"
                 />
               </div>
 
@@ -317,7 +317,7 @@ export const Cases: React.FC = () => {
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
                   placeholder="Additional case background notes..."
-                  className="w-full bg-surface-50 border border-surface-300 rounded p-2.5 text-brand-900 focus:outline-none focus:border-brand-500 font-sans"
+                  className="w-full bg-surface-50 border border-surface-300 rounded p-2.5 text-brand-900 dark:text-brand-100 focus:outline-none focus:border-brand-500 font-sans"
                 />
               </div>
 
@@ -331,7 +331,7 @@ export const Cases: React.FC = () => {
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-brand-600 text-brand-900 rounded hover:bg-brand-500 font-semibold"
+                  className="px-4 py-2 bg-brand-600 text-white rounded hover:bg-brand-500 font-semibold"
                 >
                   Save Case
                 </button>

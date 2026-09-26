@@ -16,12 +16,12 @@ export const MapChart: React.FC<MapChartProps> = ({ markers = [] }) => {
             <Geography
               key={geo.rsmKey}
               geography={geo}
-              fill="#ffffff"
-              stroke="#e2e8f0"
+              fill="var(--surface-300)"
+              stroke="var(--surface-400)"
               strokeWidth={0.5}
               style={{
                 default: { outline: "none" },
-                hover: { fill: "#1e293b", outline: "none" },
+                hover: { fill: "#0284c7", outline: "none" },
                 pressed: { outline: "none" },
               }}
             />

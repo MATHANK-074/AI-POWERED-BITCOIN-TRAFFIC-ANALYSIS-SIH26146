@@ -24,7 +24,7 @@ export const Clusters: React.FC = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-xl font-bold text-brand-900 flex items-center gap-2">
+        <h2 className="text-xl font-bold text-brand-900 dark:text-brand-100 flex items-center gap-2">
           <Layers className="w-5 h-5 text-purple-400" />
           Entity Behavior Clustering
         </h2>
@@ -36,7 +36,7 @@ export const Clusters: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Cluster Distribution Chart */}
         <div className="bg-surface-100 border border-surface-300 p-5 rounded-xl">
-          <h3 className="text-sm font-semibold text-brand-900 mb-4">Cluster Size Distribution</h3>
+          <h3 className="text-sm font-semibold text-brand-900 dark:text-brand-100 mb-4">Cluster Size Distribution</h3>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={clusters}>
@@ -52,7 +52,7 @@ export const Clusters: React.FC = () => {
 
         {/* Cluster Details Table */}
         <div className="bg-surface-100 border border-surface-300 rounded-xl overflow-hidden shadow-lg p-5">
-          <h3 className="text-sm font-semibold text-brand-900 mb-4">Cluster Characteristics</h3>
+          <h3 className="text-sm font-semibold text-brand-900 dark:text-brand-100 mb-4">Cluster Characteristics</h3>
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs text-content-600 font-mono">
               <thead className="bg-surface-50 text-content-500 text-[11px] uppercase border-b border-surface-300">
@@ -75,7 +75,7 @@ export const Clusters: React.FC = () => {
                       <td className="p-3 font-semibold text-purple-400">
                         {c.cluster_id === -1 ? 'Outliers (Noise)' : `Cluster ${c.cluster_id}`}
                       </td>
-                      <td className="p-3 text-right font-bold text-brand-900">{c.count}</td>
+                      <td className="p-3 text-right font-bold text-brand-900 dark:text-brand-100">{c.count}</td>
                       <td className="p-3 text-right text-warning-600 font-semibold">
                         {(c.avg_anomaly ?? 0).toFixed(4)}
                       </td>

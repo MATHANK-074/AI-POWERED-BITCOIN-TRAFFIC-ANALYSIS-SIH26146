@@ -23,7 +23,7 @@ export const Evaluation: React.FC = () => {
   return (
     <div className="space-y-6 max-w-4xl mx-auto">
       <div>
-        <h2 className="text-xl font-bold text-brand-900 flex items-center gap-2">
+        <h2 className="text-xl font-bold text-brand-900 dark:text-brand-100 flex items-center gap-2">
           <Activity className="w-5 h-5 text-verified-600" />
           AI / ML Model Performance & Evaluation
         </h2>
@@ -40,8 +40,8 @@ export const Evaluation: React.FC = () => {
         ) : (
           <div className="space-y-6">
             <div className="flex items-center justify-between border-b border-surface-300 pb-3">
-              <span className="text-sm font-semibold text-brand-900">{evalData.evaluation_type}</span>
-              <span className="text-xs font-mono text-brand-600 bg-brand-100/60 border border-cyan-800 px-2.5 py-1 rounded">
+              <span className="text-sm font-semibold text-brand-900 dark:text-brand-100">{evalData.evaluation_type}</span>
+              <span className="text-xs font-mono text-brand-600 dark:text-brand-400 bg-brand-100/60 border border-cyan-800 px-2.5 py-1 rounded">
                 Verified Metrics
               </span>
             </div>
@@ -55,7 +55,7 @@ export const Evaluation: React.FC = () => {
                 </div>
                 <div className="p-4 bg-surface-50 rounded-xl border border-surface-300 text-center">
                   <span className="text-xs text-content-500 block mb-1">Recall</span>
-                  <span className="text-2xl font-bold font-mono text-brand-600">{evalData.recall}</span>
+                  <span className="text-2xl font-bold font-mono text-brand-600 dark:text-brand-400">{evalData.recall}</span>
                 </div>
                 <div className="p-4 bg-surface-50 rounded-xl border border-surface-300 text-center">
                   <span className="text-xs text-content-500 block mb-1">F1 Score</span>
@@ -71,7 +71,7 @@ export const Evaluation: React.FC = () => {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className="p-4 bg-surface-50 rounded-xl border border-surface-300">
                   <span className="text-xs text-content-500 block mb-1">Entities Evaluated</span>
-                  <span className="text-xl font-bold font-mono text-brand-900">
+                  <span className="text-xl font-bold font-mono text-brand-900 dark:text-brand-100">
                     {evalData.total_entities_evaluated ?? 0}
                   </span>
                 </div>
@@ -83,7 +83,7 @@ export const Evaluation: React.FC = () => {
                 </div>
                 <div className="p-4 bg-surface-50 rounded-xl border border-surface-300">
                   <span className="text-xs text-content-500 block mb-1">Average Anomaly Score</span>
-                  <span className="text-xl font-bold font-mono text-brand-600">
+                  <span className="text-xl font-bold font-mono text-brand-600 dark:text-brand-400">
                     {evalData.avg_anomaly_score ?? 0}
                   </span>
                 </div>

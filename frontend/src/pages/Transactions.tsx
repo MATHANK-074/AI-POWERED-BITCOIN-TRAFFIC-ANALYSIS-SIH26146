@@ -33,8 +33,8 @@ export const Transactions: React.FC = () => {
     <div className="space-y-6">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
-          <h2 className="text-xl font-bold text-brand-900 flex items-center gap-2">
-            <ListFilter className="w-5 h-5 text-brand-600" />
+          <h2 className="text-xl font-bold text-brand-900 dark:text-brand-100 flex items-center gap-2">
+            <ListFilter className="w-5 h-5 text-brand-600 dark:text-brand-400" />
             Transaction Explorer
           </h2>
           <p className="text-xs text-content-500 mt-1">
@@ -45,7 +45,7 @@ export const Transactions: React.FC = () => {
           href="http://127.0.0.1:8000/api/export/transactions/csv"
           target="_blank"
           rel="noreferrer"
-          className="px-3.5 py-2 bg-surface-200 hover:bg-surface-300 text-brand-900 text-xs font-medium rounded-lg transition-all flex items-center gap-2 border border-surface-400"
+          className="px-3.5 py-2 bg-surface-200 hover:bg-surface-300 text-brand-900 dark:text-brand-100 text-xs font-medium rounded-lg transition-all flex items-center gap-2 border border-surface-400"
         >
           <Download className="w-3.5 h-3.5" /> Export CSV
         </a>
@@ -60,7 +60,7 @@ export const Transactions: React.FC = () => {
             placeholder="Search by TXID..."
             value={searchTxid}
             onChange={(e) => setSearchTxid(e.target.value)}
-            className="w-full bg-surface-50 border border-surface-300 rounded-lg pl-9 pr-3 py-1.5 text-xs text-brand-900 placeholder-slate-500 focus:outline-none focus:border-brand-500"
+            className="w-full bg-surface-50 border border-surface-300 rounded-lg pl-9 pr-3 py-1.5 text-xs text-brand-900 dark:text-brand-100 placeholder-slate-500 focus:outline-none focus:border-brand-500"
           />
         </div>
         <div className="flex-1 min-w-[200px] relative">
@@ -70,12 +70,12 @@ export const Transactions: React.FC = () => {
             placeholder="Search by Wallet Address..."
             value={searchWallet}
             onChange={(e) => setSearchWallet(e.target.value)}
-            className="w-full bg-surface-50 border border-surface-300 rounded-lg pl-9 pr-3 py-1.5 text-xs text-brand-900 placeholder-slate-500 focus:outline-none focus:border-brand-500"
+            className="w-full bg-surface-50 border border-surface-300 rounded-lg pl-9 pr-3 py-1.5 text-xs text-brand-900 dark:text-brand-100 placeholder-slate-500 focus:outline-none focus:border-brand-500"
           />
         </div>
         <button
           onClick={fetchTxs}
-          className="px-4 py-1.5 bg-brand-600 hover:bg-brand-500 text-brand-900 text-xs font-medium rounded-lg transition-all"
+          className="px-4 py-1.5 bg-brand-600 hover:bg-brand-500 text-white text-xs font-medium rounded-lg transition-all"
         >
           Apply Filters
         </button>
@@ -112,7 +112,7 @@ export const Transactions: React.FC = () => {
               ) : (
                 txs.map((tx) => (
                   <tr key={tx.txid} className="hover:bg-surface-200 transition-all">
-                    <td className="p-3 text-brand-600 font-semibold truncate max-w-[120px]" title={tx.txid}>
+                    <td className="p-3 text-brand-600 dark:text-brand-400 font-semibold truncate max-w-[120px]" title={tx.txid}>
                       {tx.txid}
                     </td>
                     <td className="p-3 text-content-500">{tx.timestamp || 'N/A'}</td>

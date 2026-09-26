@@ -2,6 +2,36 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --surface-50: #ffffff;
+  --surface-100: #f8fafc;
+  --surface-200: #f1f5f9;
+  --surface-300: #e2e8f0;
+  --surface-400: #cbd5e1;
+
+  --content-200: #94a3b8;
+  --content-300: #64748b;
+  --content-400: #475569;
+  --content-500: #334155;
+  --content-600: #1e293b;
+  --content-700: #0f172a;
+}
+
+:root.dark {
+  --surface-50: #0f172a;
+  --surface-100: #1e293b;
+  --surface-200: #334155;
+  --surface-300: #475569;
+  --surface-400: #64748b;
+
+  --content-200: #475569;
+  --content-300: #64748b;
+  --content-400: #94a3b8;
+  --content-500: #cbd5e1;
+  --content-600: #e2e8f0;
+  --content-700: #f1f5f9;
+}
+
 @layer base {
   body {
     @apply bg-surface-50 text-content-700 font-sans;
@@ -9,7 +39,7 @@
   }
   
   h1, h2, h3, h4, h5, h6 {
-    @apply text-brand-900;
+    @apply text-brand-900 dark:text-brand-300;
   }
 }
 
