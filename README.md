@@ -1,128 +1,66 @@
-# Offline Bitcoin Investigation & AI/ML Analytics System
-
-A complete, high-performance, offline Bitcoin transaction investigation and analytics system designed for financial forensics, network correlation research, and decision support.
-
-The system ingests bulk Bitcoin network-layer and blockchain-layer metadata, correlates network IP observations with blockchain transactions, validates and cleans data, stores it in DuckDB analytical storage, generates graph topologies and ML features, performs anomaly detection and entity clustering, computes transparent investigation priority scores with explainable natural language leads, and provides an offline dashboard with local report exporters.
-
----
-
-## Key Features
-
-1. **Multi-Format Ingestion**: Supports CSV, JSON (JSON Array & NDJSON), and XML files with chunked parsing.
-2. **Validation & Cleaning**: Validates IPv4/IPv6 regex, port ranges (`0 - 65535`), BTC amounts/fees, and timestamps. Logs rejected records to `data/processed/rejected_records.csv`.
-3. **DuckDB Local Storage**: Ultra-fast columnar DuckDB database (`data/processed/bitcoin_investigation.duckdb`).
-4. **Network-Blockchain Correlation Engine**: Evidence-based temporal window matching ($\pm 1s$ to $\pm 30s$) producing candidate linkages ($\text{IP} \xrightarrow{\text{candidate}} \text{TXID} \rightarrow \text{Wallet}$).
-5. **Entity Resolution & Feature Engineering**: Aggregates metrics per wallet and IP (volume, fee ratios, counterparties, in/out ratios, temporal burst scores).
-6. **AI/ML Anomaly & Clustering Engine**: Isolation Forest anomaly detection, DBSCAN clustering, PCA 2D scatter projection, and synthetic ground truth evaluation metrics.
-7. **NetworkX Knowledge Graph**: Topology builder linking IP, TXID, and Wallet entities with Cytoscape.js export.
-8. **Explainable Priority Scoring**: Pattern detectors (Burst, Fan-In, Fan-Out, High-Frequency, Unusual Fee, Network Concentration) combined into a $0-100$ **Investigation Priority Score** with natural language explanations.
-9. **Offline React + Tailwind Dashboard**: Interactive Cytoscape graph visualizer, Recharts scatter plots, filterable transaction/wallet/IP/leads explorers, and local report exporters (HTML, JSON, CSV).
-10. **Responsible AI Terminology**: Explicit disclaimers ensuring model predictions are decision-support indicators rather than proof of criminal activity.
+<div align="center">
+  <img src="https://img.shields.io/badge/Status-SIH%20Ready-success" alt="Status" />
+  <img src="https://img.shields.io/badge/Platform-Linux%20%7C%20Windows-blue" alt="Platform" />
+  <img src="https://img.shields.io/badge/AI_Model-Isolation%20Forest%20%2B%20DBSCAN-purple" alt="AI Models" />
+  <h1>🛡️ KRISHIGUARD</h1>
+  <h3>Offline AI-Powered Bitcoin Investigation & Network Forensic Workstation</h3>
+</div>
 
 ---
 
-## System Architecture
+## 📖 Overview
+**KRISHIGUARD** is a complete, 100% offline digital forensics platform built to ingest bulk Bitcoin transaction metadata, correlate network-layer observations (IPs, Ports, Timestamps) with blockchain-layer data (Wallets, TXIDs, Amounts), and deploy unsupervised AI/ML models to generate ranked, explainable investigative leads. 
 
-```
-RAW DATA (CSV / JSON / XML)
-         │
-         ▼
-DATA INGESTION & PARSING
-         │
-         ▼
-SCHEMA NORMALIZATION & VALIDATION ──► REJECTED AUDIT LOG
-         │
-         ▼
-DUCKDB ANALYTICAL STORAGE
-         │
-         ▼
-NETWORK-BLOCKCHAIN CORRELATION ENGINE
-         │
-         ▼
-ENTITY RESOLUTION & FEATURE ENGINEERING
-         │
-         ├──────────────────────────┐
-         ▼                          ▼
-AI/ML ANOMALY DETECTION    ENTITY CLUSTERING (DBSCAN)
-(ISOLATION FOREST)                 │
-         │                          │
-         └────────────┬─────────────┘
-                      ▼
-PATTERN DETECTION & EXPLAINABLE LEADS (0-100 SCORES)
-                      │
-                      ▼
-KNOWLEDGE GRAPH CONSTRUCTION (NETWORKX)
-                      │
-                      ▼
-FASTAPI REST BACKEND (http://127.0.0.1:8000)
-                      │
-                      ▼
-OFFLINE REACT + TAILWIND DASHBOARD (http://127.0.0.1:5173)
-```
+Designed specifically to address the challenge of tracking illicit funds (ransomware, darknet proceeds) through pseudonymous, peer-to-peer networks without relying on external cloud APIs.
 
 ---
 
-## Setup & Running Commands (Windows)
+## 🚀 1-Click Deployment (Linux / Debian / Kali)
 
-### 1. Environment Setup
+The platform is designed to be evaluated flawlessly on a Linux environment without any complex setup. 
 
-```bash
-# Clone or open workspace
-cd c:\Users\Lenovo\Desktop\Crypto
+**Zero dependencies required (No Node.js or npm needed).** The FastAPI backend serves the pre-compiled React frontend natively.
 
-# Create Python Virtual Environment
-python -m venv .venv
-
-# Activate Virtual Environment
-.venv\Scripts\activate
-
-# Install Backend Dependencies
-pip install -r backend/requirements.txt
-pip install python-multipart
-```
-
-### 2. Generate Synthetic Dataset (100,000 Records)
-
-```bash
-.venv\Scripts\python.exe scripts/generate_dataset.py
-```
-
-### 3. Run Batch Processing Pipeline
-
-```bash
-.venv\Scripts\python.exe scripts/run_all.py
-```
-
-### 4. Start Backend Server (FastAPI)
-
-```bash
-.venv\Scripts\python.exe -m uvicorn app.main:app --host 127.0.0.1 --port 8000 --app-dir backend
-```
-
-*Interactive API Documentation available at:* [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
-
-### 5. Start Frontend Dashboard (React + Vite)
-
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-*Open Dashboard in Browser:* [http://127.0.0.1:5173](http://127.0.0.1:5173)
+1. Open your terminal in the repository root.
+2. Grant execution permissions:
+   ```bash
+   chmod +x Launch_KrishiGuard.sh
+   ```
+3. Run the launcher:
+   ```bash
+   ./Launch_KrishiGuard.sh
+   ```
+*The script will automatically configure the Python environment, boot the local server, and open the KrishiGuard dashboard in your default web browser.*
 
 ---
 
-## Unit Testing
+## 🧠 Technical Write-Up: Approach & AI Methodology
 
-Run the automated test suite with pytest:
+### 1. Architectural Approach
+Our solution implements a multi-stage pipeline designed for offline, high-throughput execution:
+* **Multi-format Data Ingestion:** Custom parsers for CSV, JSON, and XML ingest raw metadata directly into a **DuckDB** analytical datastore. DuckDB was chosen for its blazing-fast, serverless, in-memory OLAP capabilities.
+* **Network-Blockchain Correlation:** A time-window correlation engine links observed network IPs and Ports to specific Bitcoin Wallets and Transactions, bridging the gap between physical infrastructure and blockchain activity.
+* **Knowledge Graph Construction:** We map these correlations into a mathematical graph (analyzed via `NetworkX` and visualized via `Cytoscape.js`), extracting vital topological heuristics like **Degree Centrality** and **Betweenness**.
 
-```bash
-.venv\Scripts\python.exe -m pytest backend/tests
-```
+### 2. AI/ML Model Choice (Not just rules)
+Instead of relying on hardcoded thresholds, KrishiGuard utilizes two unsupervised machine learning models to detect criminal activity in synthetic datasets:
+* **Isolation Forest (Anomaly Detection):** Chosen because it excels at isolating high-dimensional outliers (e.g., wallets with unusually high transaction frequencies, massive fee spikes, or rapid hop-patterns) without requiring a labeled training dataset.
+* **DBSCAN (Entity Clustering):** A density-based spatial clustering algorithm used to group correlated suspicious entities into "criminal rings." It was chosen because it does not require a predetermined number of clusters ($k$) and naturally filters out ambient "noise."
+
+### 3. Explainability Method (XAI)
+A critical requirement is that investigators must trust the AI. Our `PriorityScorer` fuses the ML outputs (Isolation Forest anomaly scores) with Graph Heuristics to generate **Ranked, Explainable Leads**.
+* **Confidence Scoring:** Each lead is assigned a mathematically derived 0-100 Confidence Score based on the severity of the anomaly and the density of the entity's cluster.
+* **Audit Trail Generation:** Instead of a "black box" alert, the system generates human-readable reasons for every flag (e.g., *"Flagged due to top 5% transaction volume"* or *"Directly connected to 3 anomalous IP addresses"*). This is displayed directly on the UI's **Explainability Panel**.
 
 ---
 
-## Responsible Use Disclaimer
+## 🖥️ UI & Dashboard Features
 
-This system is designed for educational, research, and analytical decision-support purposes. Model-generated anomaly scores, network correlation linkages, and investigation priority metrics do not by themselves establish criminal conduct, identity, or legal ownership. Human investigator review and corroboration are required.
+The frontend is a custom-built, responsive React application styled as a premium Dark-Mode Forensic Workstation:
+
+* **Command Center:** Real-time metrics, anomaly detection rates, and a geographical IP map (using offline MaxMind MMDB).
+* **Forensic Data Tables:** Deep-dive tabular views into Transactions, Priority Leads, and Case Management with intelligent sorting and filtering.
+* **Interactive Investigation Graph:** A dynamic, physics-based (`cose`) link-analysis visualization where users can trace funds across Wallets (Purple Diamonds), IPs (Cyan Hexagons), and TXIDs (Blue Circles).
+
+---
+*Built for the Smart India Hackathon (SIH).*
