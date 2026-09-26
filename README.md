@@ -15,22 +15,45 @@ Designed specifically to address the challenge of tracking illicit funds (ransom
 
 ---
 
-## 🚀 1-Click Deployment (Linux / Debian / Kali)
+## 🚀 Deployment (Linux / Debian / Ubuntu)
 
-The platform is designed to be evaluated flawlessly on a Linux environment without any complex setup. 
+The platform is designed to be evaluated flawlessly on a Linux environment without any complex setup. You can deploy it using either the native bash script or Docker Compose.
 
-**Zero dependencies required (No Node.js or npm needed).** The FastAPI backend serves the pre-compiled React frontend natively.
+### Option 1: Native Execution (Bash Script)
+If you have Node.js and Python installed, you can use the automated launch script to install dependencies and run both servers instantly.
 
 1. Open your terminal in the repository root.
 2. Grant execution permissions:
    ```bash
-   chmod +x Launch_KrishiGuard.sh
+   chmod +x START_KRISHIGUARD_LINUX.sh
    ```
 3. Run the launcher:
    ```bash
-   ./Launch_KrishiGuard.sh
+   ./START_KRISHIGUARD_LINUX.sh
    ```
-*The script will automatically configure the Python environment, boot the local server, and open the KrishiGuard dashboard in your default web browser.*
+*The script will configure the Python environment, install frontend dependencies, boot the servers in parallel, and expose the UI at `http://127.0.0.1:5173`.*
+
+### Option 2: Docker Compose (Fully Containerized & Offline)
+For a true 100% isolated offline evaluation without installing language dependencies, use the provided Docker configuration.
+
+1. Open your terminal in the repository root.
+2. Run the compose command:
+   ```bash
+   docker-compose up --build
+   ```
+*Docker will build and network the frontend and backend containers. Once running, access the dashboard at `http://127.0.0.1:5173`.*
+
+---
+
+## 🎲 Generating Synthetic Data
+To evaluate the platform, you can generate a massive P2P synthetic dataset with geographically accurate coordinates and pre-injected anomalous criminal clusters.
+
+```bash
+# Ensure you are in your python virtual environment
+pip install faker
+python scripts/generate_synthetic.py
+```
+*This will create a `synthetic_bitcoin_data.csv` file ready to be uploaded in the Data Ingestion tab.*
 
 ---
 

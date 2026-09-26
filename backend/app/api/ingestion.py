@@ -87,12 +87,12 @@ def get_map_markers():
             # Check if columns exist
             cols = [r[0] for r in conn.execute("DESCRIBE transactions").fetchall()]
             if 'src_lat' in cols and 'src_lon' in cols:
-                query = "SELECT city, src_lat as lat, src_lon as lon, COUNT(*) as value FROM transactions WHERE src_lat IS NOT NULL AND src_lon IS NOT NULL GROUP BY city, src_lat, src_lon HAVING src_lat != 0.0"
+                query = "SELECT src_city, src_lat as lat, src_lon as lon, COUNT(*) as value FROM transactions WHERE src_lat IS NOT NULL AND src_lon IS NOT NULL GROUP BY src_city, src_lat, src_lon HAVING src_lat != 0.0"
                 df = conn.execute(query).df()
                 markers = []
                 for _, row in df.iterrows():
                     markers.append({
-                        "name": f"{row['city'] or 'Unknown'} ({row['value']})",
+                        "name": f"{row['src_city'] or 'Unknown'} ({row['value']})",
                         "coordinates": [row['lon'], row['lat']],
                         "value": row['value']
                     })

@@ -1,5 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
+
+interface Marker {
+  name: string;
+  coordinates: [number, number];
+  value: number;
+}
 import { getIngestStatus, getLeads, getMapMarkers } from '../services/api';
+
 import { SystemStats, InvestigationLead } from '../types';
 import { ShieldAlert, ListFilter, Users, Network, AlertTriangle, FileText, ArrowUpRight } from 'lucide-react';
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
@@ -12,7 +19,7 @@ interface OverviewProps {
 export const Overview: React.FC<OverviewProps> = ({ onNavigate }) => {
   const [stats, setStats] = useState<SystemStats | null>(null);
   const [topLeads, setTopLeads] = useState<InvestigationLead[]>([]);
-  const [markers, setMarkers] = useState([]);
+  const [markers, setMarkers] = useState<Marker[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -35,14 +42,14 @@ export const Overview: React.FC<OverviewProps> = ({ onNavigate }) => {
     fetchData();
   }, []);
 
-  const chartData = [
+  const chartData = useMemo(() => [
     { name: 'Transactions', count: stats?.total_transactions || 0 },
     { name: 'Wallets', count: stats?.total_wallets || 0 },
     { name: 'Network IPs', count: stats?.total_ips || 0 },
     { name: 'Correlated', count: stats?.correlated_events || 0 },
     { name: 'Anomalies', count: stats?.anomalies_detected || 0 },
     { name: 'Leads', count: stats?.investigation_leads || 0 },
-  ];
+  ], [stats]);
 
   return (
     <div className="space-y-6">
