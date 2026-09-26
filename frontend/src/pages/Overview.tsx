@@ -189,7 +189,7 @@ export const Overview: React.FC<OverviewProps> = ({ onNavigate }) => {
         <h3 className="text-sm font-semibold text-brand-900 dark:text-brand-100 mb-4 flex items-center gap-2">
           Global IP Geographic Distribution
         </h3>
-        <div className="w-full h-96">
+        <div className="w-full overflow-hidden rounded-lg">
           <MapChart markers={markers} />
         </div>
       </div>
