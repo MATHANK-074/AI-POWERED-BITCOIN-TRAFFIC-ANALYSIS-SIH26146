@@ -3,15 +3,26 @@
   <img src="https://img.shields.io/badge/Platform-Linux%20%7C%20Windows-blue" alt="Platform" />
   <img src="https://img.shields.io/badge/AI_Model-Isolation%20Forest%20%2B%20DBSCAN-purple" alt="AI Models" />
   <h1>🛡️ KRISHIGUARD</h1>
-  <h3>Offline AI-Powered Bitcoin Investigation & Network Forensic Workstation</h3>
+  <h3>AI-Powered Monitoring & Analysis of Bitcoin Transaction Traffic</h3>
+  <h4>National Technical Research Organisation (NTRO) - Problem Statement 5</h4>
 </div>
 
 ---
 
 ## 📖 Overview
-**KRISHIGUARD** is a complete, 100% offline digital forensics platform built to ingest bulk Bitcoin transaction metadata, correlate network-layer observations (IPs, Ports, Timestamps) with blockchain-layer data (Wallets, TXIDs, Amounts), and deploy unsupervised AI/ML models to generate ranked, explainable investigative leads. 
+**KRISHIGUARD** is a complete, 100% offline digital forensics platform designed to meet the exact requirements of Problem Statement 5. It ingests bulk Bitcoin transaction/network metadata, correlates network-layer observations (IP/port/timing) with blockchain-layer data (wallet/TXID/amount), and deploys unsupervised AI/ML models to detect anomalies, cluster entities, and generate prioritized, explainable investigative leads. 
 
 Designed specifically to address the challenge of tracking illicit funds (ransomware, darknet proceeds) through pseudonymous, peer-to-peer networks without relying on external cloud APIs.
+
+---
+
+## 🎯 Challenge Objectives Met
+- ✅ **Bulk Ingestion:** Parses massive metadata datasets (timestamp, IP, port, TXID, wallets, amounts, fees).
+- ✅ **Graph Construction:** Builds an entity/transaction knowledge graph linking IPs, wallets, and transactions.
+- ✅ **AI/ML Detection:** Deploys working ML models (Isolation Forest, DBSCAN) for anomaly detection and clustering—not just rules.
+- ✅ **Explainable Alerts:** Generates a ranked alert list with confidence scores and clear human-readable evidence for why entities were flagged.
+- ✅ **Dashboard Visualization:** Presents findings via a comprehensive dashboard and interactive link-analysis graph.
+- ✅ **Offline Linux Solution:** Fully workable offline solution for Linux platforms (Docker & Bash).
 
 ---
 
@@ -45,8 +56,8 @@ For a true 100% isolated offline evaluation without installing language dependen
 
 ---
 
-## 🎲 Generating Synthetic Data
-To evaluate the platform, you can generate a massive P2P synthetic dataset with geographically accurate coordinates and pre-injected anomalous criminal clusters.
+## 🎲 Generating Synthetic Data (Dataset Compliance)
+To evaluate the platform, you can generate a synthetic dataset modeled on real Bitcoin P2P/transaction fields. The generator creates the exact required minimum fields: `timestamp`, `src_ip`, `dst_ip`, `src_port`, `dst_port`, `txid`, `input_addresses[]`, `output_addresses[]`, `input_amounts[]`, `output_amounts[]`, `geo_country/asn` (using offline GeoIP).
 
 ```bash
 # Ensure you are in your python virtual environment
@@ -65,10 +76,11 @@ Our solution implements a multi-stage pipeline designed for offline, high-throug
 * **Network-Blockchain Correlation:** A time-window correlation engine links observed network IPs and Ports to specific Bitcoin Wallets and Transactions, bridging the gap between physical infrastructure and blockchain activity.
 * **Knowledge Graph Construction:** We map these correlations into a mathematical graph (analyzed via `NetworkX` and visualized via `Cytoscape.js`), extracting vital topological heuristics like **Degree Centrality** and **Betweenness**.
 
-### 2. AI/ML Model Choice (Not just rules)
-Instead of relying on hardcoded thresholds, KrishiGuard utilizes two unsupervised machine learning models to detect criminal activity in synthetic datasets:
-* **Isolation Forest (Anomaly Detection):** Chosen because it excels at isolating high-dimensional outliers (e.g., wallets with unusually high transaction frequencies, massive fee spikes, or rapid hop-patterns) without requiring a labeled training dataset.
-* **DBSCAN (Entity Clustering):** A density-based spatial clustering algorithm used to group correlated suspicious entities into "criminal rings." It was chosen because it does not require a predetermined number of clusters ($k$) and naturally filters out ambient "noise."
+### 2. AI/ML Model Choice
+We directly address the suggested AI/ML focus areas using advanced models:
+* **Entity Clustering (DBSCAN):** A density-based spatial clustering algorithm used to group wallets likely owned by one entity using common-input-ownership and graph correlations. It natively handles "noise" to identify dense criminal rings without needing a predefined cluster count.
+* **Anomaly Detection (Isolation Forest):** Used to flag statistically unusual transactions/flows. It isolates high-dimensional outliers (e.g., wallets with unusually high transaction frequencies or massive fee spikes) without requiring a labeled training dataset.
+* **Peeling-Chain / Mixing Detection & Risk Scoring:** Graph algorithms propagate risk scores from anomalous nodes across the network, automatically identifying laundering-pattern transaction sequences (peeling chains, CoinJoin-like structures) by analyzing input/output fan-out patterns.
 
 ### 3. Explainability Method (XAI)
 A critical requirement is that investigators must trust the AI. Our `PriorityScorer` fuses the ML outputs (Isolation Forest anomaly scores) with Graph Heuristics to generate **Ranked, Explainable Leads**.
@@ -81,9 +93,9 @@ A critical requirement is that investigators must trust the AI. Our `PrioritySco
 
 The frontend is a custom-built, responsive React application styled as a premium Dark-Mode Forensic Workstation:
 
-* **Command Center:** Real-time metrics, anomaly detection rates, and a geographical IP map (using offline MaxMind MMDB).
+* **Command Center:** Real-time metrics, anomaly detection rates, and a geographical IP map.
 * **Forensic Data Tables:** Deep-dive tabular views into Transactions, Priority Leads, and Case Management with intelligent sorting and filtering.
 * **Interactive Investigation Graph:** A dynamic, physics-based (`cose`) link-analysis visualization where users can trace funds across Wallets (Purple Diamonds), IPs (Cyan Hexagons), and TXIDs (Blue Circles).
 
 ---
-*Built for the Smart India Hackathon (SIH).*
+*Developed for the Smart India Hackathon (SIH).*
